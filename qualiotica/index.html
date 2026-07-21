@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garanta 50% OFF | Semana Zeiss 2026 | QualiÓtica</title>
+    <meta name="description" content="Preencha o formulário da Semana Zeiss na QualiÓtica e veja o seu cupom de 50% de desconto se revelar na tela em tempo real.">
+    <link rel="stylesheet" href="style.css?v=1.1">
+    
+    <!-- Icons (Lucide Icons via CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Cinematic Split Shutter Page Intro -->
+    <div id="intro-shutter">
+        <div class="shutter-half shutter-top"></div>
+        <div class="shutter-half shutter-bottom"></div>
+        <div class="shutter-logo-wrapper">
+            <img src="assets/qualiotica-logo-new.png" alt="QualiÓtica" class="intro-logo" style="width: 200px; max-width: 65vw; height: auto;">
+        </div>
+    </div>
+
+    <!-- Full-screen Blurred Zeiss Store Background -->
+    <div class="full-screen-bg" id="bg-container">
+        <div class="bg-dark-overlay"></div>
+    </div>
+
+    <main class="main-container center-layout">
+        
+        <!-- FLOATING STEP-BY-STEP FORM CARD -->
+        <section class="card form-card" id="form-card">
+            
+            <!-- Campaign Tagline (Scent match with Meta Ads reference) -->
+            <div class="campaign-tag-wrapper">
+                <div class="top-row-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; gap: 12px; width: 100%;">
+                    <div class="top-logo-wrapper">
+                        <img src="assets/qualiotica-logo-new.png" alt="QualiÓtica" style="height: 34px; width: auto; display: block; border-radius: 2px;">
+                    </div>
+                    <div class="campaign-badge" style="margin: 0 !important; flex-shrink: 0;">
+                        <i data-lucide="bell" class="bell-icon" style="width: 12px; height: 12px;"></i>
+                        <span>PREPARE-SE</span>
+                    </div>
+                </div>
+                <h1 class="campaign-main-title">A maior campanha do ano<br>para trocar seus óculos<span class="highlight-line">está chegando! PREPARE-SE!</span></h1>
+                <p class="campaign-sub-title subtitle-index">Responda 4 perguntas rápidas e veja melhorar a sua visão.<br><strong>Desbloqueie e garanta o seu cupom de desconto!</strong></p>
+            </div>
+
+            <!-- Quiz progress: step counter + speed reassurance -->
+            <div class="quiz-progress-header">
+                <div class="quiz-progress-label">
+                    <span id="step-counter">Pergunta 1 de 4</span>
+                    <span class="quiz-speed-badge"><i data-lucide="zap" style="width: 11px; height: 11px;"></i> Menos de 1 min</span>
+                </div>
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Quiz-style form: one question per screen -->
+            <form id="unified-form" novalidate>
+
+                <div class="quiz-step active" data-step="1">
+                    <div class="form-group">
+                        <label for="nome" class="form-label">Qual é o seu nome completo?</label>
+                        <input type="text" id="nome" class="form-input text-field" placeholder="Digite seu nome completo" autocomplete="name" required>
+                    </div>
+                    <div class="btn-row">
+                        <button type="button" class="btn-next" data-next disabled>Próxima pergunta <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i></button>
+                    </div>
+                </div>
+
+                <div class="quiz-step" data-step="2">
+                    <div class="form-group">
+                        <label for="whatsapp" class="form-label">Qual o seu WhatsApp?</label>
+                        <input type="tel" id="whatsapp" class="form-input text-field" placeholder="(00) 00000-0000" autocomplete="tel" required>
+                    </div>
+                    <div class="btn-row">
+                        <button type="button" class="btn-back" data-back>Voltar</button>
+                        <button type="button" class="btn-next" data-next disabled>Próxima pergunta <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i></button>
+                    </div>
+                </div>
+
+                <div class="quiz-step" data-step="3">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Qual o seu melhor e-mail?</label>
+                        <input type="email" id="email" class="form-input text-field" placeholder="seuemail@exemplo.com" autocomplete="email" required>
+                    </div>
+                    <div class="btn-row">
+                        <button type="button" class="btn-back" data-back>Voltar</button>
+                        <button type="button" class="btn-next" data-next disabled>Próxima pergunta <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i></button>
+                    </div>
+                </div>
+
+                <div class="quiz-step" data-step="4">
+                    <div class="form-group">
+                        <label for="loja" class="form-label">Onde você quer retirar seu desconto?</label>
+                        <select id="loja" class="form-select" required>
+                            <option value="" disabled selected>Escolha uma unidade física para retirar</option>
+                            <optgroup label="QUALIÓTICA — NITERÓI">
+                                <option value="QualiÓtica Tiffany (Icaraí)">QualiÓtica Tiffany (Icaraí)</option>
+                                <option value="QualiÓtica Crystal Platinum (Icaraí)">QualiÓtica Crystal Platinum (Icaraí)</option>
+                                <option value="QualiÓtica Mariz e Barros (Jardim Icaraí)">QualiÓtica Mariz e Barros (Jardim Icaraí)</option>
+                                <option value="QualiÓtica Av. Sete (Jardim Icaraí)">QualiÓtica Av. Sete (Jardim Icaraí)</option>
+                                <option value="QualiÓtica Itaipu (Shopping Itaipu Multicenter)">QualiÓtica Itaipu (Shopping Itaipu Multicenter)</option>
+                                <option value="QualiÓtica Piratininga">QualiÓtica Piratininga</option>
+                                <option value="QualiÓtica Centro (Conceição)">QualiÓtica Centro (Conceição)</option>
+                                <option value="QualiÓtica Fonseca">QualiÓtica Fonseca</option>
+                                <option value="QualiÓtica Trend Tower (Andrade Neves)">QualiÓtica Trend Tower (Andrade Neves)</option>
+                            </optgroup>
+                            <optgroup label="QUALIÓTICA — SÃO GONÇALO">
+                                <option value="QualiÓtica Nilo Peçanha">QualiÓtica Nilo Peçanha</option>
+                                <option value="QualiÓtica Salvatori">QualiÓtica Salvatori</option>
+                                <option value="QualiÓtica Santa Beatriz (Popular)">QualiÓtica Santa Beatriz (Popular)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="btn-row">
+                        <button type="button" class="btn-back" data-back>Voltar</button>
+                        <button type="submit" class="btn-submit" id="btn-submit-form" disabled>Gerar meu cupom <i data-lucide="check" style="width: 15px; height: 15px;"></i></button>
+                    </div>
+                </div>
+
+                <div class="top-divider"></div>
+
+                <!-- Persistent voucher preview: on screen from question 1, sharpens and unlocks with every answer -->
+                <button type="button" class="voucher-wrapper-interactive" id="submit-btn" disabled>
+                    <div class="voucher-inner-content" id="voucher-blur-content">
+                        <div class="ticket-voucher">
+                            <svg class="ticket-bg-svg" viewBox="0 0 460 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M 16 0 L 444 0 A 16 16 0 0 1 460 16 L 460 54 A 16 16 0 0 0 460 86 L 460 124 A 16 16 0 0 1 444 140 L 16 140 A 16 16 0 0 1 0 124 L 0 86 A 16 16 0 0 0 0 54 L 0 16 A 16 16 0 0 1 16 0 Z" fill="#f5f8ff" stroke="#0050ff" stroke-width="4.5" />
+                                <path d="M 16 8 L 444 8 A 8 8 0 0 1 452 16 L 452 46 A 24 24 0 0 0 452 94 L 452 124 A 8 8 0 0 1 444 132 L 16 132 A 8 8 0 0 1 8 124 L 8 94 A 24 24 0 0 0 8 46 L 8 16 A 8 8 0 0 1 16 8 Z" fill="none" stroke="#0050ff" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.45" />
+                                <line x1="250" y1="8" x2="250" y2="132" stroke="#0050ff" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.45" />
+                            </svg>
+                            <div class="ticket-body">
+                                <div class="ticket-main-row">
+                                    <div class="ticket-left">
+                                        <img src="assets/zeiss-logo-text.png" alt="ZEISS" class="ticket-logo">
+                                        <div class="ticket-tag">CUPOM</div>
+                                    </div>
+                                    <div class="ticket-right">
+                                        <span class="ticket-num">50%</span>
+                                        <div class="ticket-txt">DESCONTO</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+
+            </form>
+
+            <div class="top-divider" style="margin-top: 1.2rem; margin-bottom: 0.2rem;"></div>
+
+
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 QualiÓtica. Todos os direitos reservados. Promoção Semana Zeiss exclusiva para as lojas físicas QualiÓtica participantes. Imagens meramente ilustrativas.</p>
+    </footer>
+
+    <!-- JS Logic -->
+    <script src="app.js?v=1.1"></script>
+</body>
+</html>
