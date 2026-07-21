@@ -269,16 +269,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 mode: 'no-cors' // Crucial: prevents CORS blockage when sending to Google Apps Script / webhooks
             })
             .then(() => {
-                window.location.href = 'obrigado.html';
+                window.location.href = '/zeiss-cupom/';
             })
             .catch((error) => {
                 console.error('Erro ao enviar lead:', error);
                 // Fallback: always redirect so the user is never locked out of the thank you page
-                window.location.href = 'obrigado.html';
+                window.location.href = '/zeiss-cupom/';
             });
         } else {
             // Um clique so: gera o cupom e ja abre a pagina de confirmacao (confete la faz a festa)
-            window.location.href = 'obrigado.html';
+            window.location.href = '/zeiss-cupom/';
         }
     });
 
