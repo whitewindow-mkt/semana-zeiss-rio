@@ -107,6 +107,26 @@ body {
     margin-top: 0.15rem;
 }
 
+.hub-brand-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4rem;
+    margin-top: 0.8rem;
+}
+
+.hub-brand-logo--zeiss { height: 30px; width: auto; }
+.hub-brand-logo--quali { height: 38px; width: auto; }
+
+.hub-cities {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    color: var(--text-secondary);
+    margin-top: 0.6rem;
+}
+
 .hub-sub {
     font-size: 0.85rem;
     color: var(--text-secondary);
