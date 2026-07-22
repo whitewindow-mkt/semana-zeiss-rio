@@ -529,21 +529,21 @@ button.voucher-wrapper-interactive:not(:disabled):hover .ticket-voucher {
        mobile-first, que já centraliza o card verticalmente em qualquer
        altura de tela (notebook pequeno ou monitor grande). */
     .form-card {
-        max-width: 430px !important;
-        padding: 1.5rem 1.3rem !important;
+        max-width: 560px !important;
+        padding: 2rem 2.2rem !important;
     }
     .subtitle-index {
-        font-size: 0.75rem !important;
+        font-size: 0.92rem !important;
         line-height: 1.4 !important;
-        margin-top: 0.3rem !important;
+        margin-top: 0.4rem !important;
     }
     .campaign-main-title {
-        font-size: 1.15rem !important;
-        line-height: 1.2 !important;
+        font-size: 1.7rem !important;
+        line-height: 1.22 !important;
     }
     .campaign-main-title .highlight-line {
         font-size: 0.95em !important;
-        margin-top: 0.12rem !important;
+        margin-top: 0.15rem !important;
     }
     .logo-container img {
         height: 30px !important;
@@ -1040,10 +1040,10 @@ footer {
         font-size: 2.6rem;
     }
     .campaign-main-title {
-        font-size: 1.22rem;
+        font-size: 1.32rem;
     }
     body.thankyou-page .campaign-main-title {
-        font-size: 1.34rem;
+        font-size: 1.55rem;
     }
     .center-layout {
         padding: 1rem 1rem !important; /* Reduces vertical spacing from card to top/bottom of screen on mobile */
