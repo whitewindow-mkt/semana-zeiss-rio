@@ -1042,6 +1042,9 @@ footer {
     .campaign-main-title {
         font-size: 1.22rem;
     }
+    body.thankyou-page .campaign-main-title {
+        font-size: 1.34rem;
+    }
     .center-layout {
         padding: 1rem 1rem !important; /* Reduces vertical spacing from card to top/bottom of screen on mobile */
     }
