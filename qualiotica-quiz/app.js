@@ -22,6 +22,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Webhook configuration for leads integration (e.g. Google Apps Script, Make, Zapier or HSales API)
     const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwA-h4CKdE8bIzkoh5WrxVcuM77FLFmJhQag2yMrdypD2ReFxEQl0K6DtomjyM7fFH5/exec'; // Insira aqui a URL do seu webhook
 
+    // Floating WhatsApp button — visible on every step, updates once a store is chosen
+    const whatsappFloat = document.getElementById('whatsapp-link');
+    const floatStoreWhatsappMap = {
+        // QUALIÓTICA NITERÓI — WhatsApp único da região
+        'QualiÓtica Tiffany (Icaraí)': '5521996032814',
+        'QualiÓtica Crystal Platinum (Icaraí)': '5521996032814',
+        'QualiÓtica Mariz e Barros (Jardim Icaraí)': '5521996032814',
+        'QualiÓtica Av. Sete (Jardim Icaraí)': '5521996032814',
+        'QualiÓtica Itaipu (Shopping Itaipu Multicenter)': '5521996032814',
+        'QualiÓtica Piratininga': '5521996032814',
+        'QualiÓtica Centro (Conceição)': '5521996032814',
+        'QualiÓtica Fonseca': '5521996032814',
+        'QualiÓtica Trend Tower (Andrade Neves)': '5521996032814',
+        // QUALIÓTICA SÃO GONÇALO — WhatsApp único da região
+        'QualiÓtica Nilo Peçanha': '5521969426672',
+        'QualiÓtica Salvatori': '5521969426672',
+        'QualiÓtica Santa Beatriz (Popular)': '5521969426672'
+    };
+    const defaultFloatWhatsapp = floatStoreWhatsappMap['QualiÓtica Tiffany (Icaraí)'];
+    function updateWhatsappFloat() {
+        if (!whatsappFloat) return;
+        const store = document.getElementById('loja') ? document.getElementById('loja').value : '';
+        const number = floatStoreWhatsappMap[store] || defaultFloatWhatsapp;
+        const message = store
+            ? `Olá! Estou fazendo meu cadastro da Semana Zeiss na QualiÓtica e escolhi a unidade "${store}". Tenho uma dúvida.`
+            : 'Olá! Tenho uma dúvida sobre a Semana Zeiss na QualiÓtica.';
+        whatsappFloat.href = `https://api.whatsapp.com/send?phone=${number}&text=${encodeURIComponent(message)}`;
+    }
+    updateWhatsappFloat();
+
     // DOM Elements
     const bgContainer = document.getElementById('bg-container');
     const progressFill = document.getElementById('progress-fill');
@@ -183,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     nomeInput.addEventListener('input', () => { updateNextButtonForStep(1); updateVoucherPreview(); });
     emailInput.addEventListener('input', () => { updateNextButtonForStep(3); updateVoucherPreview(); });
-    lojaSelect.addEventListener('change', () => { updateVoucherPreview(); });
+    lojaSelect.addEventListener('change', () => { updateVoucherPreview(); updateWhatsappFloat(); });
 
     // WhatsApp Input Formatting Mask & trigger validation (mascara BR so quando o pais for Brasil)
     whatsappInput.addEventListener('input', (e) => {

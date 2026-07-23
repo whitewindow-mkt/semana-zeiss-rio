@@ -88,15 +88,9 @@
                 <p style="font-size: 0.8rem; color: var(--text-primary); line-height: 1.4; font-family: var(--font-sans);">
                     Venda somente com receita médica atualizada.<br>
                     <strong>Não tem uma?</strong><br>
-                    Agende seu exame de vista abaixo.
+                    Atualize sua receita para aproveitar a promoção.
                 </p>
             </div>
-
-            <!-- Single primary CTA: schedule the exam on WhatsApp -->
-            <a href="#" class="btn-action whatsapp" id="whatsapp-link" target="_blank" style="width: 100%; padding: 1rem; font-size: 0.95rem;">
-                <i data-lucide="calendar-check" style="width: 18px; height: 18px;"></i>
-                <span>Agendar meu exame no WhatsApp</span>
-            </a>
 
             <div class="top-divider" style="margin-top: 1.2rem; margin-bottom: 0.2rem;"></div>
 
@@ -109,6 +103,11 @@
     <footer>
         <p>&copy; 2026 Zeiss Vision Center. Todos os direitos reservados. Promoção exclusiva para as lojas físicas Zeiss Vision Center participantes. Imagens meramente ilustrativas.</p>
     </footer>
+
+    <!-- Floating WhatsApp button, visible on every step -->
+    <a href="#" id="whatsapp-link" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+        <svg viewBox="0 0 32 32" width="28" height="28" fill="#ffffff" aria-hidden="true"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.703 4.606 1.912 6.47L4 29l7.72-1.87A11.94 11.94 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16.001 3zm6.965 17.223c-.297.836-1.474 1.53-2.403 1.723-.638.13-1.47.234-4.27-.917-3.58-1.482-5.885-5.086-6.066-5.32-.176-.234-1.454-1.936-1.454-3.696 0-1.76.92-2.622 1.246-2.98.297-.324.65-.406.867-.406.217 0 .434.002.623.012.2.01.468-.076.732.559.297.716.98 2.472 1.066 2.65.087.176.145.386.03.62-.117.234-.176.38-.35.585-.176.205-.37.457-.53.615-.176.176-.36.366-.155.72.205.352.912 1.507 1.958 2.44 1.345 1.2 2.48 1.572 2.836 1.747.356.176.564.146.77-.088.205-.234.876-1.02 1.11-1.37.234-.35.468-.29.79-.176.322.117 2.045.965 2.396 1.14.35.176.583.264.67.41.087.146.087.848-.21 1.685z"/></svg>
+    </a>
 
     <script>
         // Lightweight confetti burst (no external libs) for the coupon reveal moment
@@ -228,9 +227,9 @@
             const defaultStoreData = storeDataMap['Zeiss Vision Center - Icaraí (Niterói)'];
             const storeData = storeDataMap[store] || defaultStoreData;
 
-            // 3. WhatsApp da unidade escolhida, com nome, loja e pedido de agendamento de exame
+            // 3. WhatsApp da unidade escolhida, com nome e loja
             const whatsappNumber = storeData.whatsapp;
-            const rawMessage = `Olá! Acabei de garantir meu desconto da Semana Zeiss. Meu nome é ${name}, escolhi a unidade "${store}" e gostaria de agendar meu exame de vista.`;
+            const rawMessage = `Olá! Acabei de garantir meu desconto da Semana Zeiss. Meu nome é ${name}, escolhi a unidade "${store}" e tenho uma dúvida sobre como aproveitar o cupom.`;
             const encodedMessage = encodeURIComponent(rawMessage);
             document.getElementById('whatsapp-link').href = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
 

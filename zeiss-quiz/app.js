@@ -22,6 +22,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // Webhook configuration for leads integration (e.g. Google Apps Script, Make, Zapier or HSales API)
     const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwA-h4CKdE8bIzkoh5WrxVcuM77FLFmJhQag2yMrdypD2ReFxEQl0K6DtomjyM7fFH5/exec'; // Insira aqui a URL do seu webhook
 
+    // Floating WhatsApp button — visible on every step, updates once a store is chosen
+    const whatsappFloat = document.getElementById('whatsapp-link');
+    const floatStoreWhatsappMap = {
+        'Zeiss Vision Center - Icaraí (Niterói)': '5521999790492',
+        'Zeiss Vision Center - Gávea (Shopping Gávea, RJ)': '5521972578482',
+        'Zeiss Vision Center - Rio Sul (Botafogo, RJ)': '5521995192315',
+        'Zeiss Vision Center - Largo do Machado (RJ)': '5521997148790',
+        'Zeiss Vision Center - Recreio (Shopping Américas, RJ)': '5521967295204'
+    };
+    const defaultFloatWhatsapp = floatStoreWhatsappMap['Zeiss Vision Center - Icaraí (Niterói)'];
+    function updateWhatsappFloat() {
+        if (!whatsappFloat) return;
+        const store = document.getElementById('loja') ? document.getElementById('loja').value : '';
+        const number = floatStoreWhatsappMap[store] || defaultFloatWhatsapp;
+        const message = store
+            ? `Olá! Estou fazendo meu cadastro da Semana Zeiss e escolhi a unidade "${store}". Tenho uma dúvida.`
+            : 'Olá! Tenho uma dúvida sobre a Semana Zeiss.';
+        whatsappFloat.href = `https://api.whatsapp.com/send?phone=${number}&text=${encodeURIComponent(message)}`;
+    }
+    updateWhatsappFloat();
+
     // DOM Elements
     const bgContainer = document.getElementById('bg-container');
     const progressFill = document.getElementById('progress-fill');
@@ -183,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     nomeInput.addEventListener('input', () => { updateNextButtonForStep(1); updateVoucherPreview(); });
     emailInput.addEventListener('input', () => { updateNextButtonForStep(3); updateVoucherPreview(); });
-    lojaSelect.addEventListener('change', () => { updateVoucherPreview(); });
+    lojaSelect.addEventListener('change', () => { updateVoucherPreview(); updateWhatsappFloat(); });
 
     // WhatsApp Input Formatting Mask & trigger validation (mascara BR so quando o pais for Brasil)
     whatsappInput.addEventListener('input', (e) => {

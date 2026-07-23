@@ -1299,3 +1299,40 @@ body.intro-completed #form-card {
     transform: translateY(0) scale(1) !important;
 }
 
+/* Floating WhatsApp button, visible on every step */
+.whatsapp-float {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    width: 56px;
+    height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+    z-index: 999;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+    animation: whatsappPulse 2.6s ease-in-out infinite;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.06);
+}
+
+@keyframes whatsappPulse {
+    0%, 100% { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28), 0 0 0 0 rgba(37, 211, 102, 0.55); }
+    50% { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28), 0 0 0 12px rgba(37, 211, 102, 0); }
+}
+
+@media (max-width: 500px) {
+    .whatsapp-float {
+        bottom: 16px;
+        right: 16px;
+        width: 50px;
+        height: 50px;
+    }
+}
+
