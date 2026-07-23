@@ -538,8 +538,8 @@ button.voucher-wrapper-interactive:not(:disabled):hover .ticket-voucher {
         margin-top: 0.4rem !important;
     }
     .campaign-main-title {
-        font-size: 1.7rem !important;
-        line-height: 1.22 !important;
+        font-size: 2rem !important;
+        line-height: 1.2 !important;
     }
     .campaign-main-title .highlight-line {
         font-size: 0.95em !important;
@@ -573,7 +573,11 @@ button.voucher-wrapper-interactive:not(:disabled):hover .ticket-voucher {
     body.thankyou-page .campaign-tag-wrapper {
         border-bottom: none !important;
         padding-bottom: 0 !important;
-        margin-bottom: 0.65rem !important;
+        gap: 0.45rem !important;
+        margin-bottom: 0.4rem !important;
+    }
+    body.thankyou-page .campaign-sub-title {
+        margin-top: 0.1rem !important;
     }
 }
 
