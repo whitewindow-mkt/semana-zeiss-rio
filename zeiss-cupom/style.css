@@ -1049,6 +1049,14 @@ footer {
     body.thankyou-page .campaign-main-title {
         font-size: 1.55rem;
     }
+    body.thankyou-page .campaign-tag-wrapper {
+        gap: 0.4rem !important;
+        margin-bottom: 0.1rem !important;
+    }
+    body.thankyou-page .subtitle-obrigado {
+        margin-bottom: 0 !important;
+        line-height: 1.25 !important;
+    }
     .center-layout {
         padding: 1rem 1rem !important; /* Reduces vertical spacing from card to top/bottom of screen on mobile */
     }
