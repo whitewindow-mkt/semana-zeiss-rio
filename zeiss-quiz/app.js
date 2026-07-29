@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Webhook configuration for leads integration (e.g. Google Apps Script, Make, Zapier or HSales API)
     const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwA-h4CKdE8bIzkoh5WrxVcuM77FLFmJhQag2yMrdypD2ReFxEQl0K6DtomjyM7fFH5/exec'; // Insira aqui a URL do seu webhook
 
+    // Worker da API de Conversoes. Recebe o mesmo lead e manda o evento para
+    // o Meta pelo servidor. Codigo em clientes/qualiotica-zeiss/capi-worker/.
+    const CAPI_URL = 'https://semana-zeiss-capi.whitewindow-mkt360.workers.dev';
+
     // Floating WhatsApp button — visible on every step, updates once a store is chosen
     const whatsappFloat = document.getElementById('whatsapp-link');
     const floatStoreWhatsappMap = {
@@ -290,6 +294,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Save locally to display on thank you page
         localStorage.setItem('zeiss_lead_data', JSON.stringify(leadData));
+
+        // Manda o mesmo lead para o Worker da API de Conversoes, que envia o
+        // evento Lead ao Meta pelo servidor. Independente da planilha de
+        // proposito: se um dos dois cair, o outro segue. keepalive faz a
+        // requisicao sobreviver ao redirect que vem logo depois.
+        try {
+            fetch(CAPI_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(leadData),
+                keepalive: true
+            }).catch(() => { /* medicao nunca derruba a captacao */ });
+        } catch (err) {
+            /* navegador antigo sem keepalive: ignora, o pixel do navegador ainda conta */
+        }
 
         if (WEBHOOK_URL) {
             // Show loading state to prevent double submits and show background progress
