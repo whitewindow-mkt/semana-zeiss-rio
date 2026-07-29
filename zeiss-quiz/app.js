@@ -260,6 +260,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Construct lead payload
         const leadData = {
+            // Id unico deste envio. Vai junto para o localStorage e para o
+            // webhook, entao o navegador e o servidor mandam o Lead para o
+            // Meta com o mesmo id e a conversao nao conta duas vezes.
+            eventId: 'lead-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10),
             nome: nome,
             whatsapp: whatsapp,
             paisCodigo: paisCodigo,
