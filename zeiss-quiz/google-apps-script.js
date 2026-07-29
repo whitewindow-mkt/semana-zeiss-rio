@@ -128,6 +128,13 @@ function sendMetaLead(lead) {
     if (parts.length > 1) userData.ln = [sha256(parts[parts.length - 1])];
   }
 
+  // Estes três NÃO são hasheados: vão em texto puro. São coletados no
+  // navegador pelo app.js porque o servidor não tem acesso a eles, e são os
+  // que mais elevam a correspondência. fbc carrega o clique no anúncio.
+  if (lead.userAgent) userData.client_user_agent = String(lead.userAgent);
+  if (lead.fbp) userData.fbp = String(lead.fbp);
+  if (lead.fbc) userData.fbc = String(lead.fbc);
+
   // Sem nenhum dado de identificação o Meta não consegue casar o evento
   if (!Object.keys(userData).length) return;
 

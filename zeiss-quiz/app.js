@@ -258,12 +258,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const loja = lojaSelect.value;
         const paisCodigo = countrySelect ? (countrySelect.value === 'other' ? '' : `+${countrySelect.value}`) : '+55';
 
+        // Le um cookie pelo nome. Usado para pegar os identificadores que o
+        // pixel do Meta grava no navegador.
+        const readCookie = (name) => {
+            const hit = document.cookie.split('; ').find((c) => c.indexOf(name + '=') === 0);
+            return hit ? decodeURIComponent(hit.split('=').slice(1).join('=')) : '';
+        };
+
         // Construct lead payload
         const leadData = {
             // Id unico deste envio. Vai junto para o localStorage e para o
             // webhook, entao o navegador e o servidor mandam o Lead para o
             // Meta com o mesmo id e a conversao nao conta duas vezes.
             eventId: 'lead-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10),
+            // Sinais que o servidor nao tem acesso e sao os que mais elevam a
+            // correspondencia na API de Conversoes. fbc e o que amarra o
+            // evento ao clique no anuncio; sem ele a atribuicao do servidor
+            // nao sabe de qual anuncio a pessoa veio.
+            userAgent: navigator.userAgent || '',
+            fbp: readCookie('_fbp'),
+            fbc: readCookie('_fbc'),
             nome: nome,
             whatsapp: whatsapp,
             paisCodigo: paisCodigo,
