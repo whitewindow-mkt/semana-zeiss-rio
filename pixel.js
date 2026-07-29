@@ -7,15 +7,21 @@
  *   /qualiotica-quiz/  -> formulário, bandeira QualiÓtica
  *   /qualiotica-cupom/ -> conversão, bandeira QualiÓtica
  *
- * PageView dispara em todas. Lead dispara só nas de cupom, que é onde o
- * visitante cai depois de enviar o formulário — por isso não precisa
- * escutar submit nem clique de botão.
+ * EVENTOS
+ *   PageView      todas as páginas
+ *   ViewContent   páginas de quiz — entrada no funil
+ *   Lead          páginas de cupom — pré-cadastro concluído
+ *   Contact       clique no botão de WhatsApp, em qualquer página
+ *   FindLocation  clique no link do mapa da loja, nas páginas de cupom
  *
- * DEDUPLICAÇÃO: o mesmo Lead é enviado duas vezes, uma pelo navegador
- * (aqui) e uma pelo servidor (Apps Script, via API de Conversões). Os dois
- * carregam o MESMO event_id, gerado no app.js do quiz e guardado no
- * localStorage junto com os dados do lead. O Meta usa esse id para
- * entender que é o mesmo evento e contar uma vez só. Sem isso, toda
+ * Purchase fica de fora de propósito: a venda acontece na loja física, dias
+ * depois. Quando o cliente passar a entregar os dados de venda, ela entra
+ * pela API de Conversões, não por aqui.
+ *
+ * DEDUPLICAÇÃO: o Lead é enviado duas vezes, uma pelo navegador (aqui) e uma
+ * pelo servidor (Apps Script). Os dois carregam o MESMO event_id, gerado no
+ * app.js do quiz e guardado no localStorage junto com os dados do lead. O
+ * Meta usa esse id para contar a conversão uma vez só. Sem isso, toda
  * conversão contaria em dobro.
  */
 (function () {
@@ -28,11 +34,12 @@
 
   var path = window.location.pathname.toLowerCase();
   var isCupom = path.indexOf('cupom') !== -1;
+  var isQuiz = path.indexOf('quiz') !== -1;
   var brand = path.indexOf('qualiotica') !== -1 ? 'QualiOtica' : 'ZEISS';
 
   // Nas páginas de cupom não existe formulário para a correspondência
-  // avançada ler, então entregamos e-mail e telefone na mão, a partir do
-  // que o quiz guardou. O Meta gera o hash antes de enviar.
+  // avançada ler, então entregamos e-mail, telefone e nome na mão, a partir
+  // do que o quiz guardou. O Meta gera o hash antes de enviar.
   var lead = null;
   if (isCupom) {
     try {
@@ -76,20 +83,62 @@
 
   fbq('track', 'PageView');
 
+  // ── entrada no funil ────────────────────────────────────────────────
+  if (isQuiz) {
+    fbq('track', 'ViewContent', {
+      content_name: 'Quiz Semana ZEISS',
+      content_category: brand
+    });
+  }
+
+  // ── conversão ───────────────────────────────────────────────────────
   if (isCupom) {
-    var params = {
+    var leadParams = {
       content_name: 'Pre-cadastro Semana ZEISS',
       content_category: brand
     };
-    if (lead && lead.loja) params.content_ids = [String(lead.loja)];
+    if (lead && lead.loja) leadParams.content_ids = [String(lead.loja)];
 
     if (lead && lead.eventId) {
-      fbq('track', 'Lead', params, { eventID: lead.eventId });
+      fbq('track', 'Lead', leadParams, { eventID: lead.eventId });
     } else {
       // sem eventId (visita direta na página de cupom, sem passar pelo
       // formulário) não há evento de servidor correspondente, então não
       // existe risco de contagem dupla
-      fbq('track', 'Lead', params);
+      fbq('track', 'Lead', leadParams);
     }
   }
+
+  // ── cliques de intenção ─────────────────────────────────────────────
+  // Delegado no document: os links de WhatsApp e mapa têm href definido pelo
+  // app.js depois do carregamento, então não dá para amarrar listener direto
+  // no elemento na hora que este script roda.
+  document.addEventListener('click', function (ev) {
+    var el = ev.target && ev.target.closest ? ev.target.closest('a') : null;
+    if (!el) return;
+
+    var href = (el.getAttribute('href') || '').toLowerCase();
+    var id = (el.id || '').toLowerCase();
+
+    var isWhats = id === 'whatsapp-link' ||
+      (el.className && String(el.className).indexOf('whatsapp-float') !== -1) ||
+      href.indexOf('wa.me') !== -1 ||
+      href.indexOf('whatsapp.com') !== -1;
+
+    var isMaps = id === 'maps-link' ||
+      href.indexOf('maps.app.goo.gl') !== -1 ||
+      href.indexOf('google.com/maps') !== -1;
+
+    if (isWhats) {
+      fbq('track', 'Contact', { content_category: brand });
+      return;
+    }
+
+    if (isMaps) {
+      fbq('track', 'FindLocation', {
+        content_category: brand,
+        content_name: (lead && lead.loja) ? String(lead.loja) : 'loja nao informada'
+      });
+    }
+  }, true);
 })();
