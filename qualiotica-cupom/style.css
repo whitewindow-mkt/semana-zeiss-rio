@@ -1348,3 +1348,74 @@ body.intro-completed #form-card {
     }
 }
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PADRÃO TIPOGRÁFICO — PÁGINA DE CONFIRMAÇÃO
+   ───────────────────────────────────────────────────────────────────────
+   Antes daqui a página tinha 7 tamanhos de fonte e as 2 famílias
+   misturadas sem critério. A regra agora é curta:
+
+   DOIS TAMANHOS   --fs-grande (só o título) e --fs-pequena (todo o resto)
+   DUAS FONTES     Archivo no título principal, Manrope em tudo mais
+   DOIS DESTAQUES  o título principal e o nome da loja. Só.
+
+   Qualquer outro elemento de texto entra em --fs-pequena com peso normal.
+   Antes de acrescentar um terceiro tamanho, pergunte se ele é mesmo
+   necessário — foi assim que a página virou carnaval da primeira vez.
+
+   ⚠️ O TICKET DO CUPOM (.ticket-*) NÃO ENTRA NESTE PADRÃO.
+      Ele tem escala própria em container query e fica exatamente como está.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+body.thankyou-page {
+    --fs-grande: 1.5rem;      /* mobile; o desktop sobe no @media abaixo */
+    --fs-pequena: 0.82rem;
+    --peso-normal: 500;
+    --peso-destaque: 800;
+}
+
+@media (min-width: 501px) {
+    body.thankyou-page { --fs-grande: 2rem; }
+}
+
+/* ── Destaque 1 — título principal: a única coisa grande da página ── */
+body.thankyou-page .campaign-main-title {
+    font-family: var(--font-display) !important;
+    font-size: var(--fs-grande) !important;
+    font-weight: 900 !important;
+}
+
+/* Era 0.9em (desktop 0.95em), ou seja, um terceiro tamanho escondido
+   dentro do próprio título. Agora as duas linhas medem igual. */
+body.thankyou-page .campaign-main-title .highlight-line {
+    font-size: 1em !important;
+}
+
+/* ── Destaque 2 — nome da loja ── */
+body.thankyou-page #maps-link {
+    font-family: var(--font-sans) !important;
+    font-size: var(--fs-pequena) !important;
+    font-weight: var(--peso-destaque) !important;
+}
+
+/* ── Todo o resto: um tamanho só, um peso só, uma fonte só ── */
+body.thankyou-page .campaign-badge,
+body.thankyou-page .campaign-badge span,
+body.thankyou-page .quiz-progress-label #step-counter,
+body.thankyou-page .quiz-speed-badge,
+body.thankyou-page .brinde-line,
+body.thankyou-page .rules-checklist p,
+body.thankyou-page footer,
+body.thankyou-page footer p {
+    font-family: var(--font-sans) !important;
+    font-size: var(--fs-pequena) !important;
+    font-weight: var(--peso-normal) !important;
+}
+
+/* As pílulas seguem em caixa alta — isso é o formato do componente,
+   não mais um tamanho de fonte disputando atenção com o título. */
+body.thankyou-page .campaign-badge,
+body.thankyou-page .quiz-progress-label #step-counter,
+body.thankyou-page .quiz-speed-badge {
+    letter-spacing: 0.06em !important;
+}
