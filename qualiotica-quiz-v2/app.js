@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Webhook de leads (Google Apps Script) — mesmo destino da v1
     const WEBHOOK_URL = 'https://semana-zeiss-capi.whitewindow-mkt360.workers.dev';
+    // Perna 2 do envio. O Worker acima e a fonte de verdade (D1 + Meta);
+    // este alimenta a planilha e manda o e-mail pelo MailApp, com remetente
+    // do Gmail. Os dois recebem o MESMO payload.
+    const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwA-h4CKdE8bIzkoh5WrxVcuM77FLFmJhQag2yMrdypD2ReFxEQl0K6DtomjyM7fFH5/exec';
 
     // Para onde a pessoa vai depois de enviar. A v1 manda para /zeiss-cupom/;
     // esta versao tem a sua propria pagina de cupom para que o evento Lead de
@@ -324,6 +328,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (window.lucide) window.lucide.createIcons();
             }
 
+
+            // Perna 2 — planilha + e-mail (MailApp). Dispara e esquece: vai com
+            // no-cors porque o /exec do Apps Script nao devolve cabecalho CORS.
+            // Se falhar, o lead JA esta salvo pela chamada do Worker abaixo —
+            // foi a falta desse segundo caminho que abriu o buraco de 30/07.
+            if (SHEETS_URL) {
+                fetch(SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(leadData),
+                    keepalive: true
+                }).catch((e) => console.error('Apps Script falhou (lead segue salvo no Worker):', e));
+            }
             fetch(WEBHOOK_URL, {
                 method: 'POST',
                 headers: {
