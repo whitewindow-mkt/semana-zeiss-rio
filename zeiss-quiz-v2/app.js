@@ -12,11 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
 
     // Webhook de leads (Google Apps Script) — mesmo destino da v1
-    const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwA-h4CKdE8bIzkoh5WrxVcuM77FLFmJhQag2yMrdypD2ReFxEQl0K6DtomjyM7fFH5/exec';
-
-    // Worker da API de Conversoes. Recebe o mesmo lead e manda o evento para
-    // o Meta pelo servidor. Codigo em clientes/qualiotica-zeiss/capi-worker/.
-    const CAPI_URL = 'https://semana-zeiss-capi.whitewindow-mkt360.workers.dev';
+    const WEBHOOK_URL = 'https://semana-zeiss-capi.whitewindow-mkt360.workers.dev';
 
     // Para onde a pessoa vai depois de enviar. A v1 manda para /zeiss-cupom/;
     // esta versao tem a sua propria pagina de cupom para que o evento Lead de
@@ -39,9 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!whatsappFloat) return;
         const store = document.getElementById('loja') ? document.getElementById('loja').value : '';
         const number = floatStoreWhatsappMap[store] || defaultFloatWhatsapp;
-        const message = store
-            ? `Olá! Estou fazendo meu cadastro da Semana Zeiss e escolhi a unidade "${store}". Tenho uma dúvida.`
-            : 'Olá! Tenho uma dúvida sobre a Semana Zeiss.';
+        // Mensagem única pra todo mundo. A pessoa pode clicar aqui no primeiro
+        // segundo, antes de escolher loja: texto que falava de "meu cadastro"
+        // e citava a unidade chegava errado ou pela metade.
+        const message = 'Olá! Vi a Semana ZEISS e queria tirar uma dúvida.';
         whatsappFloat.href = `https://api.whatsapp.com/send?phone=${number}&text=${encodeURIComponent(message)}`;
     }
     updateWhatsappFloat();
@@ -310,21 +307,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Save locally to display on the coupon page
         localStorage.setItem('zeiss_lead_data', JSON.stringify(leadData));
 
-        // Manda o mesmo lead para o Worker da API de Conversoes, que envia o
-        // evento Lead ao Meta pelo servidor. Independente da planilha de
-        // proposito: se um dos dois cair, o outro segue. keepalive faz a
-        // requisicao sobreviver ao redirect que vem logo depois.
-        try {
-            fetch(CAPI_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(leadData),
-                keepalive: true
-            }).catch(() => { /* medicao nunca derruba a captacao */ });
-        } catch (err) {
-            /* navegador antigo sem keepalive: ignora, o pixel do navegador ainda conta */
-        }
-
         if (WEBHOOK_URL) {
             // Show loading state to prevent double submits and show background progress
             if (btnSubmitForm) {
@@ -339,9 +321,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(leadData),
-                mode: 'no-cors' // Crucial: prevents CORS blockage when sending to Google Apps Script / webhooks
+                // keepalive: se a pessoa sair da página no meio, a requisição
+                // ainda chega. O Worker responde assim que grava o lead.
+                keepalive: true
             })
-            .then(() => {
+            .then((res) => {
+                if (!res.ok) console.error('Lead recusado pelo servidor: HTTP ' + res.status);
                 window.location.href = CUPOM_URL;
             })
             .catch((error) => {

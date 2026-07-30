@@ -231,7 +231,7 @@
 
             // 3. WhatsApp da unidade escolhida, com nome e loja
             const whatsappNumber = storeData.whatsapp;
-            const rawMessage = `Olá! Acabei de garantir meu desconto da Semana Zeiss. Meu nome é ${name}, escolhi a unidade "${store}" e tenho uma dúvida sobre como aproveitar o cupom.`;
+            const rawMessage = `Olá! Garanti meu cupom da Semana ZEISS. Meu nome é ${firstName}.`;
             document.getElementById('whatsapp-link').href = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(rawMessage)}`;
 
             // 4. Link do Google Maps da unidade. A QualiÓtica não tem link salvo do
