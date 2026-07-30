@@ -104,6 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fieldByStep = { 1: 'nome', 2: 'whatsapp', 3: 'email', 4: 'loja' };
 
+    // Funil interno do quiz. Guarda quais etapas ja foram contadas para nao
+    // inflar o numero quando a pessoa volta e avanca de novo.
+    const passosDisparados = new Set();
+    const BRAND_LABEL = 'QualiOtica';
+
     // Progression map (Current Step -> Voucher Blur, Page Bg Blur)
     const progressionMap = {
         1: { voucherBlur: '7px', bgBlur: '6px' },    // Step 1 active (initial blur is lighter so client knows it is a coupon)
@@ -152,6 +157,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const dir = direction || (stepNumber >= currentStep ? 'forward' : 'back');
         currentStep = stepNumber;
+
+        // Marca a etapa alcancada, uma vez so e so na ida. A etapa 1 nao
+        // entra: quem abriu a pagina ja conta como ViewContent no pixel.
+        // Com isso da para ler onde a pessoa desiste dentro do quiz.
+        if (dir === 'forward' && stepNumber > 1 && !passosDisparados.has(stepNumber)) {
+            passosDisparados.add(stepNumber);
+            if (window.fbq) {
+                window.fbq('trackCustom', 'QuizPasso' + stepNumber, {
+                    campo: fieldByStep[stepNumber] || '',
+                    content_category: BRAND_LABEL
+                });
+            }
+        }
 
         steps.forEach((stepEl) => {
             const isTarget = Number(stepEl.dataset.step) === stepNumber;
