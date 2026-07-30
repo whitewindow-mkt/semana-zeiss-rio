@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupom confirmado | Semana Zeiss 50% OFF</title>
+    <meta name="description" content="Seu cupom de 50% de desconto foi confirmado. Veja como usar na loja Zeiss Vision Center e agende seu exame de vista.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="style.css?v=1.5">
+    <link rel="stylesheet" href="v2.css?v=1.5">
+
+    <!-- Icons (Lucide Icons via CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Trava de ambiente. Em localhost, neutraliza o pixel antes de ele
+         carregar: teste local nunca deve virar Lead na conta do cliente.
+         O snippet do Meta começa com `if (f.fbq) return`, então definir
+         fbq aqui faz ele sair sem nem baixar o fbevents.js, e as chamadas
+         seguintes caem neste no-op. Em produção o hostname nunca é
+         localhost, então nada muda. -->
+    <script>
+        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            window.fbq = function () {};
+            window._fbq = window.fbq;
+        }
+    </script>
+
+    <!-- Meta Pixel — Semana ZEISS -->
+    <script src="/pixel.js?v=3"></script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "98ebdb1d451549c5970b1c91e564b337"}'></script>
+</head>
+<body class="thankyou-page v2-body">
+
+    <!-- Full-screen Blurred Zeiss Store Background (Unblurred/Sharp on Thank You Page) -->
+    <div class="full-screen-bg" id="bg-container">
+        <div class="bg-dark-overlay"></div>
+    </div>
+
+    <!-- Confetti burst on coupon reveal -->
+    <canvas id="confetti-canvas" style="position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999;"></canvas>
+
+    <main class="main-container center-layout">
+
+        <section class="card form-card">
+
+            <!-- Sem a foto aqui de propósito: nesta página o herói visual é o
+                 cupom. A continuidade com a captura vem da tipografia
+                 (Archivo 900, caixa alta) e da faixa azul. -->
+            <div class="v2-topo">
+                <img src="assets/zeiss-logo-real.webp" alt="ZEISS" class="v2-topo-logo">
+                <span class="v2-selo-ok"><i data-lucide="check" style="width: 12px; height: 12px;"></i> Cupom garantido</span>
+            </div>
+
+            <div class="v2-hero">
+                <h1 class="v2-parabens">Parabéns<br><span id="lead-name">Nathan</span>!</h1>
+                <div class="v2-faixa">Semana ZEISS vem aí!</div>
+            </div>
+
+            <div class="v2-cupom-zone">
+
+                <div class="ticket-voucher ticket-voucher-obrigado">
+                    <svg class="ticket-bg-svg" viewBox="0 0 460 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 16 0 L 444 0 A 16 16 0 0 1 460 16 L 460 54 A 16 16 0 0 0 460 86 L 460 124 A 16 16 0 0 1 444 140 L 16 140 A 16 16 0 0 1 0 124 L 0 86 A 16 16 0 0 0 0 54 L 0 16 A 16 16 0 0 1 16 0 Z" fill="#f5f8ff" stroke="#0050ff" stroke-width="4.5" />
+                        <path d="M 16 8 L 444 8 A 8 8 0 0 1 452 16 L 452 46 A 24 24 0 0 0 452 94 L 452 124 A 8 8 0 0 1 444 132 L 16 132 A 8 8 0 0 1 8 124 L 8 94 A 24 24 0 0 0 8 46 L 8 16 A 8 8 0 0 1 16 8 Z" fill="none" stroke="#0050ff" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.45" />
+                        <line x1="250" y1="8" x2="250" y2="132" stroke="#0050ff" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.45" />
+                    </svg>
+                    <div class="ticket-body">
+                        <div class="ticket-main-row">
+                            <div class="ticket-left">
+                                <img src="assets/zeiss-logo-text.png" alt="ZEISS" class="ticket-logo">
+                                <div class="ticket-tag">CUPOM</div>
+                            </div>
+                            <div class="ticket-right">
+                                <span class="ticket-num">50%</span>
+                                <div class="ticket-txt">DESCONTO</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="v2-brinde">Use o cupom na loja escolhida<br>e ganhe um brinde especial!</p>
+
+                <a id="maps-link" class="v2-loja-link" href="#" target="_blank" rel="noopener">
+                    <i data-lucide="map-pin" style="width: 13px; height: 13px; flex-shrink: 0;"></i>
+                    <span id="selected-store-text">Zeiss Vision Center</span>
+                </a>
+
+                <div class="v2-aviso">
+                    <i data-lucide="eye" style="width: 14px; height: 14px; flex-shrink: 0;"></i>
+                    <span>Lembre-se de levar seu exame de vista atualizado.</span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Zeiss Vision Center. Todos os direitos reservados. Promoção exclusiva para as lojas físicas Zeiss Vision Center participantes. Imagens meramente ilustrativas.</p>
+    </footer>
+
+    <!-- Floating WhatsApp button -->
+    <a href="#" id="whatsapp-link" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+        <svg viewBox="0 0 32 32" width="28" height="28" fill="#ffffff" aria-hidden="true"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.703 4.606 1.912 6.47L4 29l7.72-1.87A11.94 11.94 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16.001 3zm6.965 17.223c-.297.836-1.474 1.53-2.403 1.723-.638.13-1.47.234-4.27-.917-3.58-1.482-5.885-5.086-6.066-5.32-.176-.234-1.454-1.936-1.454-3.696 0-1.76.92-2.622 1.246-2.98.297-.324.65-.406.867-.406.217 0 .434.002.623.012.2.01.468-.076.732.559.297.716.98 2.472 1.066 2.65.087.176.145.386.03.62-.117.234-.176.38-.35.585-.176.205-.37.457-.53.615-.176.176-.36.366-.155.72.205.352.912 1.507 1.958 2.44 1.345 1.2 2.48 1.572 2.836 1.747.356.176.564.146.77-.088.205-.234.876-1.02 1.11-1.37.234-.35.468-.29.79-.176.322.117 2.045.965 2.396 1.14.35.176.583.264.67.41.087.146.087.848-.21 1.685z"/></svg>
+    </a>
+
+    <script>
+        // Lightweight confetti burst (no external libs) for the coupon reveal moment
+        function fireConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            ctx.scale(dpr, dpr);
+
+            const colors = ['#0050ff', '#00c8ff', '#10b981', '#ffffff', '#ffd166'];
+            const gravity = 0.16;
+            const drag = 0.985;
+            const count = 140;
+
+            const pieces = Array.from({ length: count }, () => ({
+                x: window.innerWidth / 2 + (Math.random() - 0.5) * 60,
+                y: window.innerHeight * 0.32,
+                vx: (Math.random() - 0.5) * 14,
+                vy: Math.random() * -14 - 6,
+                size: Math.random() * 6 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rotation: Math.random() * 360,
+                spin: (Math.random() - 0.5) * 16,
+                shape: Math.random() > 0.5 ? 'rect' : 'circle',
+                life: 1
+            }));
+
+            const start = performance.now();
+            const duration = 2200;
+
+            function frame(now) {
+                const elapsed = now - start;
+                ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+                pieces.forEach((p) => {
+                    p.vy += gravity;
+                    p.vx *= drag;
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.rotation += p.spin;
+                    if (elapsed > duration * 0.6) p.life -= 0.025;
+
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(p.life, 0);
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rotation * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    if (p.shape === 'rect') {
+                        ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.6);
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, p.size / 2.2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                });
+
+                if (elapsed < duration) {
+                    requestAnimationFrame(frame);
+                } else {
+                    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                }
+            }
+
+            requestAnimationFrame(frame);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            // Coupon reveal moment: burst confetti right away
+            fireConfetti();
+
+            // 1. Retrieve saved lead data
+            const rawData = localStorage.getItem('zeiss_lead_data');
+            let name = 'Nathan';
+            let store = 'Zeiss Vision Center - Icaraí (Niterói)';
+
+            if (rawData) {
+                try {
+                    const leadData = JSON.parse(rawData);
+                    name = leadData.nome || 'Nathan';
+                    store = leadData.loja || store;
+                } catch(e) {
+                    console.error('Erro ao ler localStorage', e);
+                }
+            }
+
+            // Só o primeiro nome. A exclamação vive no HTML, depois do span:
+            // colocá-la aqui duplicaria a pontuação.
+            const firstName = name.split(' ')[0];
+            document.getElementById('lead-name').textContent = firstName;
+
+            const storeTextEl = document.getElementById('selected-store-text');
+            if (storeTextEl) {
+                storeTextEl.textContent = store;
+            }
+
+            // 2. Dados reais por loja: WhatsApp próprio de cada unidade (verificado via Instagram/Fev 2026)
+            // + link do Google Maps salvo de cada loja.
+            const storeDataMap = {
+                'Zeiss Vision Center - Icaraí (Niterói)': { whatsapp: '5521999790492', mapsUrl: 'https://maps.app.goo.gl/1uR3GMe6ho8SBFBg8' },
+                'Zeiss Vision Center - Gávea (Shopping Gávea, RJ)': { whatsapp: '5521972578482', mapsUrl: 'https://maps.app.goo.gl/VgVw3YAen2856k1R6' },
+                'Zeiss Vision Center - Rio Sul (Botafogo, RJ)': { whatsapp: '5521995192315', mapsUrl: 'https://maps.app.goo.gl/Zgzn8VHYoFf7CkEN7' },
+                'Zeiss Vision Center - Largo do Machado (RJ)': { whatsapp: '5521997148790', mapsUrl: 'https://maps.app.goo.gl/uShJXwP3oh4zWmJN6' },
+                'Zeiss Vision Center - Recreio (Shopping Américas, RJ)': { whatsapp: '5521967295204', mapsUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Zeiss Vision Center, Avenida das Américas, 15500, loja 175, Shopping Américas, Recreio dos Bandeirantes, Rio de Janeiro') }
+            };
+
+            const defaultStoreData = storeDataMap['Zeiss Vision Center - Icaraí (Niterói)'];
+            const storeData = storeDataMap[store] || defaultStoreData;
+
+            // 3. WhatsApp da unidade escolhida, com nome e loja
+            const whatsappNumber = storeData.whatsapp;
+            const rawMessage = `Olá! Acabei de garantir meu desconto da Semana Zeiss. Meu nome é ${name}, escolhi a unidade "${store}" e tenho uma dúvida sobre como aproveitar o cupom.`;
+            document.getElementById('whatsapp-link').href = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(rawMessage)}`;
+
+            // 4. Link do Google Maps da unidade
+            const mapsLinkEl = document.getElementById('maps-link');
+            if (mapsLinkEl) {
+                mapsLinkEl.href = storeData.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(store)}`;
+            }
+        });
+    </script>
+</body>
+</html>

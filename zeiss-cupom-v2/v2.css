@@ -1,0 +1,217 @@
+/* =============================================================
+   V2 — página de cupom ZEISS (última etapa)
+   Carregado DEPOIS de style.css, só sobrescreve o que muda.
+
+   Aqui NÃO entra a foto da campanha: nesta página o herói visual é o
+   cupom. A continuidade com a captura vem da tipografia (Archivo 900,
+   caixa alta, tracking negativo) e da faixa azul.
+   ============================================================= */
+
+/* Mesmo desfoque da captura. O style.css base zera o desfoque nesta
+   página (`body.thankyou-page .full-screen-bg { filter: blur(0px)
+   !important }`), o que fazia o fundo mudar de uma página para a outra.
+   O !important aqui é para vencer aquele. */
+.v2-body.thankyou-page .full-screen-bg {
+    filter: blur(10px) !important;
+}
+
+/* Sem borda e mesma largura da captura: as duas páginas têm que parecer
+   o mesmo card em dois momentos, não duas páginas diferentes. */
+.v2-body .form-card {
+    border: none;
+    /* !important pelo mesmo motivo da captura: o base fixa 560px com
+       !important acima de 501px de largura. */
+    max-width: 640px !important;
+}
+
+/* ── TOPO: logo + selo de confirmado ───────────────────────── */
+
+.v2-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.v2-topo-logo {
+    height: 48px;
+    width: auto;
+    display: block;
+    border-radius: 4px;
+}
+
+.v2-selo-ok {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(0.62rem, 2.6vw, 0.72rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: var(--success);
+    padding: 0.3rem 0.55rem 0.26rem;
+    border-radius: 3px;
+}
+
+/* ── BLOCO DA CONFIRMAÇÃO ──────────────────────────────────── */
+
+.v2-hero {
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.v2-parabens,
+.v2-faixa {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.015em;
+}
+
+/* Em duas linhas de propósito: o nome é dinâmico, e empilhar mantém o
+   corpo grande sem risco de estourar a largura com nomes longos. */
+.v2-parabens {
+    font-weight: 900;
+    font-size: clamp(2.3rem, 11.5vw, 3.1rem);
+    line-height: 0.96;
+    color: var(--text-light);
+    overflow-wrap: break-word;
+}
+
+/* Mesma faixa azul da captura. */
+.v2-faixa {
+    display: inline-block;
+    font-weight: 900;
+    font-size: clamp(0.92rem, 4.35vw, 1.15rem);
+    line-height: 1.2;
+    color: #ffffff;
+    background: var(--zeiss-blue);
+    padding: 0.32rem 0.6rem 0.28rem;
+    border-radius: 3px;
+    margin-top: 0.6rem;
+}
+
+/* ── CUPOM E INSTRUÇÕES ────────────────────────────────────── */
+
+.v2-cupom-zone {
+    padding-top: 1.1rem;
+}
+
+.v2-brinde {
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    font-size: clamp(0.8rem, 3.6vw, 0.95rem);
+    line-height: 1.3;
+    color: var(--zeiss-blue);
+    margin-top: 0.95rem;
+}
+
+/* Mesma tipografia da captura, inclusive nos blocos de apoio:
+   Archivo, caixa alta, corpos equivalentes aos do formulário. */
+.v2-loja-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    width: 100%;
+    margin-top: 0.8rem;
+    padding: 0.48rem 0.6rem;
+    background: rgba(0, 80, 255, 0.05);
+    border-radius: 6px;
+    color: var(--zeiss-blue);
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Seletor longo de propósito. O base tem
+   `body.thankyou-page #maps-link { font-family/size/weight !important }`
+   e, com !important dos dois lados, quem ganha é a especificidade —
+   um id mais uma classe mais body não bastavam. */
+body.thankyou-page #maps-link.v2-loja-link {
+    font-family: var(--font-display) !important;
+    font-weight: 900 !important;
+    font-size: clamp(0.74rem, 3.25vw, 0.86rem) !important;
+}
+
+.v2-aviso {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid rgba(0, 80, 255, 0.15);
+    background: rgba(0, 80, 255, 0.04);
+    border-radius: 10px;
+    color: var(--text-light);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(0.72rem, 3.15vw, 0.82rem);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    line-height: 1.35;
+    text-align: center;
+}
+
+/* ── ALTURA DA PÁGINA ──────────────────────────────────────────
+   Mesma correção da captura: o style.css base tem min-height fixo no
+   main e um rodapé folgado. Sem isso a página rola sem necessidade. */
+.v2-body .center-layout {
+    min-height: 0;
+    padding: 0.55rem 1rem !important;
+}
+
+.v2-body footer {
+    padding: 0.55rem 1.1rem 0.7rem;
+}
+
+.v2-body footer p {
+    font-size: 0.6rem;
+    line-height: 1.32;
+    opacity: 0.6;
+}
+
+@media (max-height: 720px) {
+    .v2-body .center-layout {
+        padding: 0.25rem 1rem !important;
+    }
+
+    .v2-topo {
+        margin-bottom: 0.7rem;
+    }
+
+    .v2-parabens {
+        font-size: clamp(1.95rem, 9.8vw, 2.6rem);
+    }
+
+    .v2-hero {
+        padding-bottom: 0.75rem;
+    }
+
+    .v2-cupom-zone {
+        padding-top: 0.85rem;
+    }
+
+    .v2-brinde {
+        margin-top: 0.7rem;
+    }
+
+    .v2-body footer {
+        padding: 0.35rem 1.1rem 0.45rem;
+    }
+
+    .v2-body footer p {
+        font-size: 0.55rem;
+    }
+}

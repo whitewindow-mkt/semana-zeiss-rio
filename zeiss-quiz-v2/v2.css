@@ -1,0 +1,387 @@
+/* =============================================================
+   V2 — teste de layout da captura ZEISS
+   Carregado DEPOIS de style.css, só sobrescreve o que muda.
+
+   Ordem da página: banner do criativo -> anúncio do prêmio ->
+   formulário na parte de baixo. O cupom borrado e o desborrar
+   progressivo saíram: a mecânica não movia número.
+   ============================================================= */
+
+/* Desfoque único e fixo, igual na captura e na página de cupom. Saiu o
+   sistema antigo, que ia de 15px a 1.5px conforme a etapa e zerava na
+   última página — muito desfoque no começo, nenhum no fim. */
+.v2-body .full-screen-bg {
+    filter: blur(10px);
+}
+
+/* O card perde o padding próprio para o banner sangrar de ponta a
+   ponta. Quem carrega o respiro lateral agora são os filhos. */
+/* O !important é obrigatório: o style.css base tem
+   `.form-card { padding: 2rem 2.2rem !important }` numa media query de
+   desktop. Sem vencer isso, a foto ganha uma moldura branca de 32px e
+   para de acompanhar o canto arredondado do card. */
+.v2-card {
+    padding: 0 !important;
+    /* 640 e não 560: sobrava muita área vazia dos lados no desktop e a
+       foto ficava pequena. A altura do banner não muda (o teto de 28vh
+       manda), então o ganho é largura de foto, não de página.
+       O !important vence `.form-card { max-width: 560px !important }`,
+       que o style.css base aplica acima de 501px de largura. */
+    max-width: 640px !important;
+    /* Sem borda: o card tem 1px de `rgba(0,0,0,.08)` sobre um fundo
+       branco translúcido, e com a foto encostando na borda isso virava
+       um fio claro em volta dela. A sombra do card já define o limite. */
+    border: none;
+}
+
+/* A v1 tem uma faixa de 5px em degradê colada no topo do card. Ela
+   ficava POR CIMA da foto (z-index 2) e impedia a imagem de encostar
+   na borda e acompanhar o arredondamento. Fora. */
+.v2-card::before {
+    content: none;
+    display: none;
+}
+
+/* ── ALTURA DA PÁGINA ──────────────────────────────────────────
+   Meta: caber na tela sem barra de rolagem. O que criava os 119px
+   de excesso não era o banner: era o min-height fixo de 752px no
+   main somado a um rodapé de 179px de texto legal. */
+/* O !important é necessário: o style.css base tem
+   `.center-layout { padding: 1rem !important }` numa media query de
+   celular, e sem isso o respiro vertical volta para 16px. */
+.v2-body .center-layout {
+    min-height: 0;
+    padding: 0.55rem 1rem !important;
+}
+
+.v2-body footer {
+    padding: 0.55rem 1.1rem 0.7rem;
+}
+
+.v2-body footer p {
+    font-size: 0.6rem;
+    line-height: 1.32;
+    opacity: 0.6;
+}
+
+.v2-body footer p + p {
+    font-size: 0.58rem !important;
+    line-height: 1.3 !important;
+    margin-top: 0.35rem !important;
+    opacity: 0.5;
+}
+
+.v2-hero,
+.v2-form-zone {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+/* ── BANNER ────────────────────────────────────────────────── */
+
+.v2-banner {
+    position: relative;
+    width: 100%;
+    line-height: 0;
+    background: #0b1220; /* evita flash branco antes da imagem carregar */
+}
+
+/* O banner nunca passa de 28% da altura da tela. É isso que faz a
+   página caber em qualquer janela sem barra de rolagem: num desktop de
+   560px de largura a foto teria 337px de altura natural, o que sozinho
+   já estourava a janela real do Chrome (com abas e barra de endereço a
+   altura útil fica bem abaixo da resolução da tela). Quando o teto
+   entra, o object-fit recorta em vez de distorcer. */
+.v2-banner-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 28vh;
+    object-fit: cover;
+    /* Ancorado no TOPO, não centralizado nem em 22%: o logo da ZEISS
+       fica a 4% do alto da foto, então qualquer recorte que morda a
+       borda superior corta o logo. O arquivo já foi cortado começando
+       acima dele, então o topo é o único ponto seguro — e os óculos
+       (12% a 40%) continuam inteiros mesmo nas telas mais curtas. */
+    object-position: center top;
+}
+
+/* Base escura para o texto ficar legível sobre a foto sem tapar o
+   rosto. Sobe até ~62% e desaparece. */
+.v2-banner-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+        rgba(4, 10, 26, 0.94) 0%,
+        rgba(4, 10, 26, 0.82) 20%,
+        rgba(4, 10, 26, 0.34) 42%,
+        rgba(4, 10, 26, 0) 62%);
+    pointer-events: none;
+}
+
+.v2-banner-copy {
+    position: absolute;
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1;
+}
+
+.v2-banner-kicker {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(0.7rem, 2.85vw, 0.86rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: var(--zeiss-blue);
+    padding: 0.36rem 0.62rem 0.32rem;
+    margin-bottom: 0.55rem;
+    border-radius: 3px;
+}
+
+.v2-banner-title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.05rem, 9.4vw, 3.05rem);
+    letter-spacing: -0.038em;
+    line-height: 0.9;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 2px 22px rgba(0, 0, 0, 0.5);
+}
+
+/* Lockup de duas linhas alinhadas nas duas pontas. "SEMANA" tem 6
+   caracteres contra 5 do "ZEISS" e media 155px contra 104px no mesmo
+   corpo — daí os 0.67em, que igualam a largura das duas palavras e
+   encurtam o bloco para ele não avançar sobre o rosto. Em `em` para
+   acompanhar o clamp do pai. */
+.v2-t-semana,
+.v2-t-zeiss {
+    display: block;
+}
+
+.v2-t-semana {
+    font-size: 0.67em;
+    line-height: 1.02;
+}
+
+.v2-t-zeiss {
+    line-height: 0.9;
+}
+
+/* ── ANÚNCIO DO PRÊMIO ─────────────────────────────────────── */
+
+.v2-hero {
+    padding-top: 1.05rem;
+    padding-bottom: 0.95rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+/* Mesmo tratamento tipográfico do banner: Archivo, caixa alta,
+   tracking negativo. É o que dá o peso do "SEMANA ZEISS" ao bloco.
+   O "Parabéns" saiu daqui: agora ele vive só na página do cupom. */
+.v2-oferta,
+.v2-lentes,
+.v2-faixa-resgate {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.015em;
+}
+
+.v2-oferta {
+    display: block;
+}
+
+/* O número é o que a pessoa clicou no anúncio, então é ele que fica
+   gigante. "50% OFF" tem 7 caracteres e cabe folgado em uma linha até
+   ~70px no celular — ao contrário das frases em volta, que são longas. */
+.v2-off {
+    display: block;
+    font-weight: 900;
+    font-size: clamp(2.9rem, 15.2vw, 4.2rem);
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    color: var(--zeiss-blue);
+}
+
+/* Teto real desta linha: 24 caracteres. Acima de ~21px no celular ela
+   quebra em duas e a página volta a rolar. Encurtar a frase é o único
+   jeito de aumentar — aumentar a fonte não é. */
+.v2-lentes {
+    font-weight: 800;
+    font-size: clamp(1rem, 4.95vw, 1.25rem);
+    line-height: 1.2;
+    color: var(--text-light);
+    margin-top: 0.25rem;
+}
+
+/* Faixa azul, mesma linguagem do selo "VEM AÍ" do banner, um corpo
+   abaixo das linhas da oferta. */
+/* No celular a frase tem 35 caracteres e precisa de 308px, mas só há
+   293px úteis. Em vez de encolher a fonte para 12px, quebra em duas
+   linhas — com o <br> no HTML garantindo a quebra depois do "+", senão
+   o navegador quebra antes de "ESPECIAL" e deixa a palavra órfã.
+   Acima de 480px cabe em uma linha e o <br> é desligado. */
+.v2-faixa-resgate {
+    display: inline-block;
+    font-weight: 900;
+    font-size: clamp(0.74rem, 3.45vw, 0.92rem);
+    line-height: 1.2;
+    color: #ffffff;
+    background: var(--zeiss-blue);
+    padding: 0.32rem 0.58rem 0.28rem;
+    border-radius: 3px;
+    margin-top: 0.7rem;
+}
+
+@media (min-width: 480px) {
+    .v2-faixa-resgate br {
+        display: none;
+    }
+}
+
+/* ── FORMULÁRIO ────────────────────────────────────────────── */
+
+.v2-form-zone {
+    padding-top: 1.2rem;
+    padding-bottom: 1.35rem;
+}
+
+/* O contador de perguntas herdava um atraso de animação pensado
+   para o layout antigo, em que ele era o terceiro elemento. */
+.v2-form-zone .quiz-progress-header {
+    animation-delay: 0.1s;
+}
+
+/* Mesma tipografia do topo também aqui embaixo: Archivo, caixa alta.
+   O !important é porque o style.css base define fonte e corpo destes
+   elementos dentro de media queries. */
+.v2-form-zone #step-counter,
+.v2-form-zone .quiz-speed-badge,
+.v2-form-zone .form-label,
+.v2-form-zone .btn-next,
+.v2-form-zone .btn-back,
+.v2-form-zone .btn-submit {
+    font-family: var(--font-display) !important;
+    text-transform: uppercase;
+}
+
+.v2-form-zone #step-counter,
+.v2-form-zone .quiz-speed-badge {
+    font-weight: 900;
+    letter-spacing: 0.05em;
+}
+
+.v2-form-zone .form-label {
+    font-weight: 800;
+    font-size: clamp(0.86rem, 3.85vw, 1rem) !important;
+    letter-spacing: -0.01em;
+    color: var(--text-light);
+}
+
+.v2-form-zone .btn-next,
+.v2-form-zone .btn-back,
+.v2-form-zone .btn-submit {
+    font-weight: 900;
+    font-size: clamp(0.84rem, 3.65vw, 0.96rem) !important;
+    letter-spacing: 0.01em;
+}
+
+/* O que a pessoa digita fica na fonte de texto e sem caixa alta:
+   e-mail e nome em maiúsculas deformariam o que ela escreveu. */
+.v2-form-zone .form-input,
+.v2-form-zone .form-select {
+    font-family: var(--font-sans) !important;
+    text-transform: none !important;
+}
+
+/* Telas curtas (iPhone SE, ou qualquer celular com a barra de endereço
+   do navegador ocupando espaço): aperta o respiro para o card e o
+   rodapé continuarem caber sem rolagem. */
+@media (max-height: 720px) {
+    .v2-body .center-layout {
+        padding: 0.2rem 1rem !important;
+    }
+
+    .v2-hero {
+        padding-top: 0.55rem;
+        padding-bottom: 0.5rem;
+    }
+
+    /* Bloco da oferta comprimido: o "Parabéns" cede corpo e os
+       respiros entre as linhas encurtam. Ganha os ~30px que faltavam
+       para o card e o rodapé caberem em 667px de altura. */
+    .v2-off {
+        font-size: clamp(2.4rem, 12.8vw, 3.4rem);
+    }
+
+    .v2-lentes {
+        margin-top: 0.16rem;
+    }
+
+    .v2-faixa-resgate {
+        margin-top: 0.5rem;
+    }
+
+    .v2-form-zone {
+        padding-top: 0.8rem;
+        padding-bottom: 0.85rem;
+    }
+
+    .v2-body footer {
+        padding: 0.4rem 1.1rem 0.5rem;
+    }
+
+    .v2-body footer p {
+        font-size: 0.56rem;
+    }
+
+    .v2-body footer p + p {
+        font-size: 0.55rem !important;
+        margin-top: 0.25rem !important;
+    }
+}
+
+/* Telas bem curtas (Android pequeno, 640px de altura). Aqui o rodapé
+   quebra em mais linhas por causa da largura menor, então o banner cede
+   um pouco de altura via recorte — perde ~11% da foto, mantendo o rosto
+   enquadrado — e o rodapé aperta o resto. */
+@media (max-height: 660px) {
+    .v2-banner-img {
+        height: 175px;
+        object-fit: cover;
+        object-position: center top;
+    }
+
+    .v2-body footer {
+        padding: 0.3rem 1rem 0.4rem;
+    }
+
+    .v2-body footer p {
+        font-size: 0.53rem;
+        line-height: 1.28;
+    }
+
+    .v2-body footer p + p {
+        font-size: 0.52rem !important;
+        margin-top: 0.2rem !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .v2-hero,
+    .v2-form-zone {
+        padding-left: 1.15rem;
+        padding-right: 1.15rem;
+    }
+
+    .v2-banner-copy {
+        left: 1.15rem;
+        right: 1.15rem;
+    }
+}

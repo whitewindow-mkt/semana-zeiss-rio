@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>50% OFF em lentes ZEISS | Semana Zeiss 2026</title>
+    <meta name="description" content="Você ganhou 50% OFF em todas as lentes ZEISS. Responda 4 perguntas rápidas e resgate seu cupom + brinde especial na Semana Zeiss, de 8 a 16 de agosto.">
+    <link rel="stylesheet" href="style.css?v=1.4">
+    <link rel="stylesheet" href="v2.css?v=2.7">
+
+    <!-- Icons (Lucide Icons via CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Trava de ambiente. Em localhost, neutraliza o pixel antes de ele
+         carregar: teste local nunca deve virar evento na conta do cliente.
+         O snippet do Meta começa com `if (f.fbq) return`, então definir
+         fbq aqui faz ele sair sem nem baixar o fbevents.js, e as chamadas
+         seguintes caem neste no-op. Em produção o hostname nunca é
+         localhost, então nada muda. -->
+    <script>
+        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            window.fbq = function () {};
+            window._fbq = window.fbq;
+        }
+    </script>
+
+    <!-- Meta Pixel — Semana ZEISS -->
+    <script src="/pixel.js?v=3"></script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "98ebdb1d451549c5970b1c91e564b337"}'></script>
+</head>
+<body class="v2-body intro-completed">
+
+    <!-- Full-screen Blurred Zeiss Store Background -->
+    <div class="full-screen-bg" id="bg-container">
+        <div class="bg-dark-overlay"></div>
+    </div>
+
+    <main class="main-container center-layout">
+
+        <section class="card form-card v2-card" id="form-card">
+
+            <!-- BANNER: recorte do criativo da campanha, sangrando de ponta a ponta -->
+            <div class="v2-banner">
+                <img src="assets/banner-loira.jpg?v=2" alt="Semana ZEISS — 50% OFF em lentes ZEISS" class="v2-banner-img" width="960" height="580">
+                <div class="v2-banner-scrim"></div>
+                <div class="v2-banner-copy">
+                    <span class="v2-banner-kicker">VEM AÍ</span>
+                    <span class="v2-banner-title"><span class="v2-t-semana">Semana</span><span class="v2-t-zeiss">ZEISS</span></span>
+                </div>
+            </div>
+
+            <!-- ANÚNCIO DO PRÊMIO -->
+            <div class="v2-hero">
+                <h1 class="v2-oferta">
+                    <span class="v2-off">50% OFF</span>
+                </h1>
+                <p class="v2-lentes">em todas as lentes ZEISS</p>
+                <div class="v2-faixa-resgate">Resgate seu cupom +<br>brinde especial</div>
+            </div>
+
+            <!-- FORMULÁRIO: parte inferior da página -->
+            <div class="v2-form-zone" id="form-zone">
+
+                <div class="quiz-progress-header">
+                    <div class="quiz-progress-label">
+                        <span id="step-counter">Pergunta 1 de 4</span>
+                        <span class="quiz-speed-badge"><i data-lucide="zap" style="width: 11px; height: 11px;"></i> Menos de 1 min</span>
+                    </div>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+
+                <form id="unified-form" novalidate>
+
+                    <div class="quiz-step active" data-step="1">
+                        <div class="form-group">
+                            <label for="nome" class="form-label">Qual é o seu nome completo?</label>
+                            <input type="text" id="nome" class="form-input text-field" placeholder="Digite seu nome completo" autocomplete="name" required>
+                        </div>
+                        <div class="btn-row">
+                            <button type="button" class="btn-next" data-next disabled>Próxima pergunta <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-step" data-step="2">
+                        <div class="form-group">
+                            <label for="whatsapp" class="form-label">Qual o seu WhatsApp?</label>
+                            <input type="tel" id="whatsapp" class="form-input text-field" placeholder="(00) 00000-0000" autocomplete="tel" required>
+                        </div>
+                        <div class="btn-row">
+                            <button type="button" class="btn-back" data-back>Voltar</button>
+                            <button type="button" class="btn-next" data-next disabled>Próxima pergunta <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-step" data-step="3">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Qual o seu melhor e-mail?</label>
+                            <input type="email" id="email" class="form-input text-field" placeholder="seuemail@exemplo.com" autocomplete="email" required>
+                        </div>
+                        <div class="btn-row">
+                            <button type="button" class="btn-back" data-back>Voltar</button>
+                            <button type="button" class="btn-next" data-next disabled>Próxima pergunta <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-step" data-step="4">
+                        <div class="form-group">
+                            <label for="loja" class="form-label">Onde você quer retirar seu desconto?</label>
+                            <select id="loja" class="form-select" required>
+                                <option value="" disabled selected>Escolha uma unidade física para retirar</option>
+                                <option value="Zeiss Vision Center - Icaraí (Niterói)">Zeiss Vision Center - Icaraí (Niterói)</option>
+                                <option value="Zeiss Vision Center - Gávea (Shopping Gávea, RJ)">Zeiss Vision Center - Gávea (Shopping Gávea, RJ)</option>
+                                <option value="Zeiss Vision Center - Rio Sul (Botafogo, RJ)">Zeiss Vision Center - Rio Sul (Botafogo, RJ)</option>
+                                <option value="Zeiss Vision Center - Largo do Machado (RJ)">Zeiss Vision Center - Largo do Machado (RJ)</option>
+                                <option value="Zeiss Vision Center - Recreio (Shopping Américas, RJ)">Zeiss Vision Center - Recreio (Shopping Américas, RJ)</option>
+                            </select>
+                        </div>
+                        <div class="btn-row">
+                            <button type="button" class="btn-back" data-back>Voltar</button>
+                            <button type="submit" class="btn-submit" id="btn-submit-form" disabled>Resgatar meu cupom <i data-lucide="check" style="width: 15px; height: 15px;"></i></button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Zeiss Vision Center. Todos os direitos reservados. Promoção exclusiva para as lojas físicas Zeiss Vision Center participantes. Imagens meramente ilustrativas.</p>
+        <p style="font-size:.68rem;line-height:1.4;opacity:.55;margin-top:.6rem;">Ao enviar seus dados você concorda em ser contatado sobre a Semana ZEISS. Dados de contato e navegação podem ser compartilhados de forma criptografada com plataformas de publicidade para mensuração das campanhas.</p>
+    </footer>
+
+    <!-- Floating WhatsApp button, visible on every step -->
+    <a href="#" id="whatsapp-link" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+        <svg viewBox="0 0 32 32" width="28" height="28" fill="#ffffff" aria-hidden="true"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.703 4.606 1.912 6.47L4 29l7.72-1.87A11.94 11.94 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16.001 3zm6.965 17.223c-.297.836-1.474 1.53-2.403 1.723-.638.13-1.47.234-4.27-.917-3.58-1.482-5.885-5.086-6.066-5.32-.176-.234-1.454-1.936-1.454-3.696 0-1.76.92-2.622 1.246-2.98.297-.324.65-.406.867-.406.217 0 .434.002.623.012.2.01.468-.076.732.559.297.716.98 2.472 1.066 2.65.087.176.145.386.03.62-.117.234-.176.38-.35.585-.176.205-.37.457-.53.615-.176.176-.36.366-.155.72.205.352.912 1.507 1.958 2.44 1.345 1.2 2.48 1.572 2.836 1.747.356.176.564.146.77-.088.205-.234.876-1.02 1.11-1.37.234-.35.468-.29.79-.176.322.117 2.045.965 2.396 1.14.35.176.583.264.67.41.087.146.087.848-.21 1.685z"/></svg>
+    </a>
+
+    <!-- JS Logic -->
+    <script src="app.js?v=2.0"></script>
+</body>
+</html>
