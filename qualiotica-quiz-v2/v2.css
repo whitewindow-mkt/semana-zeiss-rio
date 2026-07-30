@@ -190,8 +190,8 @@
 /* ── ANÚNCIO DO PRÊMIO ─────────────────────────────────────── */
 
 .v2-hero {
-    padding-top: 1.4rem;
-    padding-bottom: 1.25rem;
+    padding-top: 2.3rem;
+    padding-bottom: 2.1rem;
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
@@ -217,7 +217,9 @@
 .v2-off {
     display: block;
     font-weight: 900;
-    font-size: clamp(2.9rem, 15.2vw, 4.2rem);
+    /* 18.6vw = 69.7px em 375px, que e a largura cheia da coluna (306px).
+       Bate no teto que o comentario acima ja apontava (~70px). */
+    font-size: clamp(3.4rem, 18.6vw, 5rem);
     line-height: 0.92;
     letter-spacing: -0.05em;
     color: var(--zeiss-blue);
@@ -228,10 +230,12 @@
    jeito de aumentar — aumentar a fonte não é. */
 .v2-lentes {
     font-weight: 800;
-    font-size: var(--v2-apoio);
+    /* 5.6vw = 21px em 375px: mesma largura de texto do "50% OFF" acima.
+       E exatamente o teto citado no comentario — acima disso quebra. */
+    font-size: clamp(1.15rem, 5.6vw, 1.42rem);
     line-height: 1.2;
     color: var(--text-light);
-    margin-top: 0.38rem;
+    margin-top: 0.55rem;
 }
 
 /* Faixa azul, mesma linguagem do selo "VEM AÍ" do banner, um corpo
@@ -242,15 +246,19 @@
    o navegador quebra antes de "ESPECIAL" e deixa a palavra órfã.
    Acima de 480px cabe em uma linha e o <br> é desligado. */
 .v2-faixa-resgate {
-    display: inline-block;
+    /* Bloco, nao inline-block: a faixa passa a ocupar a coluna inteira e
+       vira a base do retangulo. As duas linhas de texto acima foram
+       dimensionadas para encostar nessa mesma largura. */
+    display: block;
+    width: 100%;
     font-weight: 900;
-    font-size: clamp(0.74rem, 3.45vw, 0.92rem);
+    font-size: clamp(0.82rem, 3.9vw, 1.05rem);
     line-height: 1.2;
     color: #ffffff;
     background: var(--zeiss-blue);
-    padding: 0.32rem 0.58rem 0.28rem;
+    padding: 0.6rem 0.6rem 0.52rem;
     border-radius: 3px;
-    margin-top: 0.85rem;
+    margin-top: 1.15rem;
 }
 
 @media (min-width: 480px) {
@@ -396,11 +404,15 @@
     /* Bloco da oferta comprimido: o "Parabéns" cede corpo e os
        respiros entre as linhas encurtam. Ganha os ~30px que faltavam
        para o card e o rodapé caberem em 667px de altura. */
+    /* Tela baixa: o bloco encolhe inteiro, mas MANTEM a proporcao entre as
+       duas linhas (69.8 / 21 = 3.32), senao o "lentes" fica mais largo que o
+       "50% OFF" e o retangulo se desfaz justo no celular mais comum. */
     .v2-off {
         font-size: clamp(2.4rem, 12.8vw, 3.4rem);
     }
 
     .v2-lentes {
+        font-size: clamp(0.8rem, 3.86vw, 1.03rem);
         margin-top: 0.16rem;
     }
 
