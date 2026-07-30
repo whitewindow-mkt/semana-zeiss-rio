@@ -41,7 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateWhatsappFloat() {
         if (!whatsappFloat) return;
         const store = document.getElementById('loja') ? document.getElementById('loja').value : '';
-        const number = floatStoreWhatsappMap[store] || defaultFloatWhatsapp;
+        // Central da bandeira, nao o numero da loja (decisao de 30/07/2026).
+        // O mapa por loja fica no codigo caso a decisao volte atras.
+        const number = '5521999753381';
         // Mensagem única pra todo mundo. A pessoa pode clicar aqui no primeiro
         // segundo, antes de escolher loja: texto que falava de "meu cadastro"
         // e citava a unidade chegava errado ou pela metade.

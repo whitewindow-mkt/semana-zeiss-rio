@@ -153,13 +153,11 @@
                                 <option value="QualiÓtica Itaipu (Shopping Itaipu Multicenter)">QualiÓtica Itaipu (Shopping Itaipu Multicenter)</option>
                                 <option value="QualiÓtica Piratininga">QualiÓtica Piratininga</option>
                                 <option value="QualiÓtica Centro (Conceição)">QualiÓtica Centro (Conceição)</option>
-                                <option value="QualiÓtica Fonseca">QualiÓtica Fonseca</option>
-                                <option value="QualiÓtica Trend Tower (Andrade Neves)">QualiÓtica Trend Tower (Andrade Neves)</option>
                             </optgroup>
                             <optgroup label="QUALIÓTICA — SÃO GONÇALO">
                                 <option value="QualiÓtica Nilo Peçanha">QualiÓtica Nilo Peçanha</option>
                                 <option value="QualiÓtica Salvatori">QualiÓtica Salvatori</option>
-                                <option value="QualiÓtica Santa Beatriz (Popular)">QualiÓtica Santa Beatriz (Popular)</option>
+                                <option value="QualiÓtica Coronel Rodrigues">QualiÓtica Coronel Rodrigues</option>
                             </optgroup>
                         </select>
                     </div>
@@ -211,10 +209,12 @@
         <p style="font-size:.68rem;line-height:1.4;opacity:.55;margin-top:.6rem;">Ao enviar seus dados você concorda em ser contatado sobre a Semana ZEISS. Dados de contato e navegação podem ser compartilhados de forma criptografada com plataformas de publicidade para mensuração das campanhas.</p>
     </footer>
 
-    <!-- Botao flutuante de WhatsApp removido em 30/07/2026: apontava para o
-         numero de cada loja, e o funil vai usar 2 numeros centrais (1 Zeiss +
-         1 QualiOtica) ainda nao definidos. Para religar, devolver a ancora
-         #whatsapp-link — o JS ja trata a ausencia dela. -->
+    <!-- Botao flutuante de WhatsApp. Numero CENTRAL da bandeira, definido em
+         30/07/2026. NAO usar o numero de cada loja: o funil e atendido por
+         uma central que direciona pra unidade certa. -->
+    <a href="#" id="whatsapp-link" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+        <svg viewBox="0 0 32 32" width="28" height="28" fill="#ffffff" aria-hidden="true"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.703 4.606 1.912 6.47L4 29l7.72-1.87A11.94 11.94 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16.001 3zm6.965 17.223c-.297.836-1.474 1.53-2.403 1.723-.638.13-1.47.234-4.27-.917-3.58-1.482-5.885-5.086-6.066-5.32-.176-.234-1.454-1.936-1.454-3.696 0-1.76.92-2.622 1.246-2.98.297-.324.65-.406.867-.406.217 0 .434.002.623.012.2.01.468-.076.732.559.297.716.98 2.472 1.066 2.65.087.176.145.386.03.62-.117.234-.176.38-.35.585-.176.205-.37.457-.53.615-.176.176-.36.366-.155.72.205.352.912 1.507 1.958 2.44 1.345 1.2 2.48 1.572 2.836 1.747.356.176.564.146.77-.088.205-.234.876-1.02 1.11-1.37.234-.35.468-.29.79-.176.322.117 2.045.965 2.396 1.14.35.176.583.264.67.41.087.146.087.848-.21 1.685z"/></svg>
+    </a>
 
     <!-- JS Logic -->
     <script src="app.js?v=1.10"></script>
