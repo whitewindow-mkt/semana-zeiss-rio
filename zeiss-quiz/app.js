@@ -31,11 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Floating WhatsApp button — visible on every step, updates once a store is chosen
     const whatsappFloat = document.getElementById('whatsapp-link');
     const floatStoreWhatsappMap = {
-        'Zeiss Vision Center - Icaraí (Niterói)': '5521999790492',
-        'Zeiss Vision Center - Gávea (Shopping Gávea, RJ)': '5521972578482',
-        'Zeiss Vision Center - Rio Sul (Botafogo, RJ)': '5521995192315',
-        'Zeiss Vision Center - Largo do Machado (RJ)': '5521997148790',
-        'Zeiss Vision Center - Recreio (Shopping Américas, RJ)': '5521967295204'
+        'Zeiss Vision Center - Icaraí (Niterói)': '5521999753381',
+        'Zeiss Vision Center - Gávea (Shopping Gávea, RJ)': '5521999753381',
+        'Zeiss Vision Center - Rio Sul (Botafogo, RJ)': '5521999753381',
+        'Zeiss Vision Center - Largo do Machado (RJ)': '5521999753381',
+        'Zeiss Vision Center - Recreio (Shopping Américas, RJ)': '5521999753381'
     };
     const defaultFloatWhatsapp = floatStoreWhatsappMap['Zeiss Vision Center - Icaraí (Niterói)'];
     function updateWhatsappFloat() {

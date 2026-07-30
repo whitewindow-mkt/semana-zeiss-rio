@@ -31,15 +31,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Floating WhatsApp button — visible on every step, updates once a store is chosen
     const whatsappFloat = document.getElementById('whatsapp-link');
     const floatStoreWhatsappMap = {
-        // QUALIÓTICA NITERÓI — WhatsApp único da região
-        'QualiÓtica Tiffany (Icaraí)': '5521996032814',
-        'QualiÓtica Crystal Platinum (Icaraí)': '5521996032814',
-        'QualiÓtica Mariz e Barros (Jardim Icaraí)': '5521996032814',
-        'QualiÓtica Av. Sete (Jardim Icaraí)': '5521996032814',
-        'QualiÓtica Itaipu (Shopping Itaipu Multicenter)': '5521996032814',
-        'QualiÓtica Piratininga': '5521996032814',
-        'QualiÓtica Centro (Conceição)': '5521996032814',
-        // QUALIÓTICA SÃO GONÇALO — WhatsApp único da região
+        // QUALIÓTICA NITERÓI — WhatsApp central da bandeira (agente de IA)
+        'QualiÓtica Tiffany (Icaraí)': '5521969426672',
+        'QualiÓtica Crystal Platinum (Icaraí)': '5521969426672',
+        'QualiÓtica Mariz e Barros (Jardim Icaraí)': '5521969426672',
+        'QualiÓtica Av. Sete (Jardim Icaraí)': '5521969426672',
+        'QualiÓtica Itaipu (Shopping Itaipu Multicenter)': '5521969426672',
+        'QualiÓtica Piratininga': '5521969426672',
+        'QualiÓtica Centro (Conceição)': '5521969426672',
+        // QUALIÓTICA SÃO GONÇALO — WhatsApp central da bandeira (agente de IA)
         'QualiÓtica Nilo Peçanha': '5521969426672',
         'QualiÓtica Salvatori': '5521969426672',
         'QualiÓtica Coronel Rodrigues': '5521969426672'

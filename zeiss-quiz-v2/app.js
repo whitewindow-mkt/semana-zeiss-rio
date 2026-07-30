@@ -28,11 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Floating WhatsApp button — visible on every step, updates once a store is chosen
     const whatsappFloat = document.getElementById('whatsapp-link');
     const floatStoreWhatsappMap = {
-        'Zeiss Vision Center - Icaraí (Niterói)': '5521999790492',
-        'Zeiss Vision Center - Gávea (Shopping Gávea, RJ)': '5521972578482',
-        'Zeiss Vision Center - Rio Sul (Botafogo, RJ)': '5521995192315',
-        'Zeiss Vision Center - Largo do Machado (RJ)': '5521997148790',
-        'Zeiss Vision Center - Recreio (Shopping Américas, RJ)': '5521967295204'
+        'Zeiss Vision Center - Icaraí (Niterói)': '5521999753381',
+        'Zeiss Vision Center - Gávea (Shopping Gávea, RJ)': '5521999753381',
+        'Zeiss Vision Center - Rio Sul (Botafogo, RJ)': '5521999753381',
+        'Zeiss Vision Center - Largo do Machado (RJ)': '5521999753381',
+        'Zeiss Vision Center - Recreio (Shopping Américas, RJ)': '5521999753381'
     };
     const defaultFloatWhatsapp = floatStoreWhatsappMap['Zeiss Vision Center - Icaraí (Niterói)'];
     function updateWhatsappFloat() {
@@ -94,7 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return { validity: results, completedCount: completedCount };
     }
 
-    const fieldByStep = { 1: 'nome', 2: 'whatsapp', 3: 'email', 4: 'loja' };
+    // Ordem das perguntas na tela. A loja vem primeiro desde 30/07/2026:
+    // 437 pessoas abriam o quiz e so 39 respondiam a 1a pergunta, que pedia
+    // o nome. Escolher a loja e clique, nao digitacao de dado pessoal.
+    const fieldByStep = { 1: 'loja', 2: 'nome', 3: 'whatsapp', 4: 'email' };
+    const stepByField = {};
+    Object.keys(fieldByStep).forEach((n) => { stepByField[fieldByStep[n]] = Number(n); });
+    // Usar sempre esta funcao, nunca o numero do passo cravado: assim
+    // reordenar as perguntas nao deixa validacao apontando pro campo errado.
+    // Chama tambem o updateSubmitState: o botao de envio agora exige os 4
+    // campos e mora no ultimo passo, que nao tem [data-next] — sem isto o
+    // updateNextButtonForStep sai fora e o envio nunca libera.
+    function atualizarBotaoDoCampo(campo) { updateNextButtonForStep(stepByField[campo]); updateSubmitState(); }
 
     // Funil interno do quiz. Guarda quais etapas ja foram contadas para nao
     // inflar o numero quando a pessoa volta e avanca de novo.
@@ -102,9 +113,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const BRAND_LABEL = 'ZEISS';
 
     function updateSubmitState() {
-        const { validity } = checkFieldsValidity();
+        const { validity, completedCount } = checkFieldsValidity();
         if (btnSubmitForm) {
-            btnSubmitForm.disabled = !validity.loja;
+            // Exige os 4 campos. Antes bastava a loja, porque ela era a ultima
+            // pergunta — com a loja em primeiro isso liberaria o envio cedo demais.
+            btnSubmitForm.disabled = completedCount < 4;
         }
     }
 
@@ -145,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dir === 'forward' && stepNumber > 1 && !passosDisparados.has(stepNumber)) {
             passosDisparados.add(stepNumber);
             if (window.fbq) {
-                window.fbq('trackCustom', 'QuizPasso' + stepNumber, {
+                window.fbq('trackCustom', 'QuizCampo_' + (fieldByStep[stepNumber] || stepNumber), {
                     campo: fieldByStep[stepNumber] || '',
                     content_category: BRAND_LABEL,
                     variante: VARIANTE
@@ -183,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nextBtn = stepEl.querySelector('[data-next]');
         if (!nextBtn) return;
 
-        const { validity } = checkFieldsValidity();
+        const { validity, completedCount } = checkFieldsValidity();
         nextBtn.disabled = !validity[fieldByStep[stepNumber]];
     }
 
@@ -215,9 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // EVENT LISTENERS & INPUT HANDLING
     // -------------------------------------------------------------
 
-    nomeInput.addEventListener('input', () => { updateNextButtonForStep(1); });
-    emailInput.addEventListener('input', () => { updateNextButtonForStep(3); });
-    lojaSelect.addEventListener('change', () => { updateSubmitState(); updateWhatsappFloat(); });
+    nomeInput.addEventListener('input', () => { atualizarBotaoDoCampo('nome'); });
+    emailInput.addEventListener('input', () => { atualizarBotaoDoCampo('email'); });
+    lojaSelect.addEventListener('change', () => { atualizarBotaoDoCampo('loja'); updateSubmitState(); updateWhatsappFloat(); });
 
     // WhatsApp Input Formatting Mask & trigger validation (mascara BR so quando o pais for Brasil)
     whatsappInput.addEventListener('input', (e) => {
@@ -238,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // Outros paises: digitação livre, sem mascara (formato varia por pais)
 
-        updateNextButtonForStep(2);
+        atualizarBotaoDoCampo('whatsapp');
     });
 
     // Trocar de pais: liga/desliga a mascara BR e ajusta o placeholder
@@ -248,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
             whatsappInput.value = whatsappInput.value.replace(/\D/g, '');
             whatsappInput.placeholder = isBrazil ? '(00) 00000-0000' : 'Número com DDD/código local';
             if (isBrazil) whatsappInput.dispatchEvent(new Event('input', { bubbles: true }));
-            updateNextButtonForStep(2);
+            atualizarBotaoDoCampo('whatsapp');
         });
     }
 
