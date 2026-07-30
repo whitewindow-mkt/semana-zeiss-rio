@@ -26,11 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // o Meta pelo servidor. Codigo em clientes/qualiotica-zeiss/capi-worker/.
     const CAPI_URL = 'https://semana-zeiss-capi.whitewindow-mkt360.workers.dev';
 
-    // Worker de e-mail + agente. Manda o e-mail de confirmacao via Resend e avisa
-    // o agente de IA pra ele disparar o WhatsApp. Codigo em
-    // clientes/qualiotica-zeiss/email-worker/. A planilha continua sendo
-    // escrita so pelo WEBHOOK_URL acima — este Worker nao mexe nela.
-    const EMAIL_URL = 'https://semana-zeiss-email.whitewindow-mkt360.workers.dev';
+    // O e-mail de confirmacao voltou a ser responsabilidade do proprio Apps Script
+    // (WEBHOOK_URL abaixo), via MailApp — decisao de 30/07 pra nao pagar o plano
+    // pago do Resend por causa de uma campanha so. O Worker semana-zeiss-email
+    // (clientes/qualiotica-zeiss/email-worker/) continua publicado mas parado,
+    // pronto pra retomar se um dia o Resend entrar de verdade. NAO reativar aqui
+    // sem tambem desligar o envio de e-mail do Apps Script — os dois juntos
+    // mandam e-mail duplicado pro lead.
 
     // Floating WhatsApp button — visible on every step, updates once a store is chosen
     const whatsappFloat = document.getElementById('whatsapp-link');
@@ -341,19 +343,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }).catch(() => { /* medicao nunca derruba a captacao */ });
         } catch (err) {
             /* navegador antigo sem keepalive: ignora, o pixel do navegador ainda conta */
-        }
-
-        // Mesmo lead pro Worker de e-mail + agente. Independente dos outros dois:
-        // se o e-mail ou o agente falharem, o cadastro na planilha nao é afetado.
-        try {
-            fetch(EMAIL_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(leadData),
-                keepalive: true
-            }).catch(() => { /* e-mail/agente nunca derruba a captacao */ });
-        } catch (err) {
-            /* navegador antigo sem keepalive: ignora */
         }
 
         if (WEBHOOK_URL) {
