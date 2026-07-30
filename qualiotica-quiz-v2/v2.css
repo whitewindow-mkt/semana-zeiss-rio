@@ -91,7 +91,8 @@
    560px de largura a foto teria 337px de altura natural, o que sozinho
    já estourava a janela real do Chrome (com abas e barra de endereço a
    altura útil fica bem abaixo da resolução da tela). Quando o teto
-   entra, o object-fit recorta em vez de distorcer. */
+   entra, o object-fit recorta em vez de distorcer.
+   No celular esse teto é substituído pelo banner elástico, lá embaixo. */
 .v2-banner-img {
     display: block;
     width: 100%;
@@ -176,8 +177,8 @@
 /* ── ANÚNCIO DO PRÊMIO ─────────────────────────────────────── */
 
 .v2-hero {
-    padding-top: 1.05rem;
-    padding-bottom: 0.95rem;
+    padding-top: 1.4rem;
+    padding-bottom: 1.25rem;
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
@@ -217,7 +218,7 @@
     font-size: clamp(1rem, 4.95vw, 1.25rem);
     line-height: 1.2;
     color: var(--text-light);
-    margin-top: 0.25rem;
+    margin-top: 0.38rem;
 }
 
 /* Faixa azul, mesma linguagem do selo "VEM AÍ" do banner, um corpo
@@ -236,7 +237,7 @@
     background: var(--zeiss-blue);
     padding: 0.32rem 0.58rem 0.28rem;
     border-radius: 3px;
-    margin-top: 0.7rem;
+    margin-top: 0.85rem;
 }
 
 @media (min-width: 480px) {
@@ -248,8 +249,8 @@
 /* ── FORMULÁRIO ────────────────────────────────────────────── */
 
 .v2-form-zone {
-    padding-top: 1.2rem;
-    padding-bottom: 1.35rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.55rem;
 }
 
 /* O contador de perguntas herdava um atraso de animação pensado
@@ -298,6 +299,70 @@
 .v2-form-zone .form-select {
     font-family: var(--font-sans) !important;
     text-transform: none !important;
+}
+
+/* ── BANNER ELÁSTICO (celular) ─────────────────────────────────
+   No celular a página cabia com folga: o card ficava centralizado na
+   área útil e sobravam ~56px mortos acima dele e outros ~56 abaixo,
+   entre ele e o rodapé. Em vez de distribuir esse espaço em números
+   fixos — que só acertariam num aparelho —, o card passa a esticar até
+   a altura útil e a FOTO absorve o que sobrar, seja qual for a tela.
+   Os blocos de texto têm altura própria e não esticam.
+
+   Com o banner mais alto que a proporção natural da imagem, o
+   object-fit: cover aproxima o rosto e come as laterais (as plantas e
+   a estante) — o que a gente quer: a modelo maior. O corte no alto da
+   cabeça vem do arquivo, não do CSS; para recuperar aquilo é preciso
+   um recorte novo com mais espaço acima da testa.
+
+   O teto de 44vh existe para o zoom não virar outdoor numa tela alta e
+   estreita; o piso de 178px é o mesmo ponto em que o rosto ainda fica
+   enquadrado, herdado do ajuste antigo para telas de 640px de altura. */
+@media (max-width: 640px) {
+    .v2-body .center-layout {
+        align-items: stretch;
+    }
+
+    .v2-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* A base do flex é o piso, não a altura natural da imagem: assim o
+       banner parte do menor tamanho aceitável e cresce com a sobra, em
+       vez de partir grande e depender de encolher (o card não tem teto
+       de altura, então ele estouraria a tela antes de encolher).
+       Cresce três vezes mais rápido que o formulário: a sobra é da foto
+       primeiro, e só o que ela não puder usar vira respiro embaixo. */
+    .v2-banner {
+        flex: 3 1 178px;
+        min-height: 178px;
+        max-height: calc(70vw - 22px);
+        overflow: hidden;
+    }
+
+    /* Teto do zoom, e o motivo dele: quanto mais alto o banner, mais o
+       `cover` come das laterais da foto. O logo da ZEISS termina a 93%
+       da largura do arquivo, então acima de ~7% de corte por lado ele
+       começa a ser fatiado. 70% da largura do card é a altura em que o
+       corte bate exatamente nesse limite — daí `70vw` menos os 22px que
+       o card não ocupa da tela. Passar disso é trocar o logo por zoom. */
+
+    .v2-banner-img {
+        height: 100%;
+        max-height: none;
+    }
+
+    /* O que a foto não puder crescer vira respiro em volta das
+       perguntas, em vez de área morta no fim do card. Como a zona tem
+       altura fixa, o card também para de mudar de tamanho a cada
+       etapa do quiz. */
+    .v2-form-zone {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 }
 
 /* Telas curtas (iPhone SE, ou qualquer celular com a barra de endereço
@@ -350,12 +415,12 @@
 /* Telas bem curtas (Android pequeno, 640px de altura). Aqui o rodapé
    quebra em mais linhas por causa da largura menor, então o banner cede
    um pouco de altura via recorte — perde ~11% da foto, mantendo o rosto
-   enquadrado — e o rodapé aperta o resto. */
+   enquadrado — e o rodapé aperta o resto. O piso do banner elástico
+   desce junto: é ele que manda agora, não a altura fixa da imagem. */
 @media (max-height: 660px) {
-    .v2-banner-img {
-        height: 175px;
-        object-fit: cover;
-        object-position: center top;
+    .v2-banner {
+        flex-basis: 158px;
+        min-height: 158px;
     }
 
     .v2-body footer {
