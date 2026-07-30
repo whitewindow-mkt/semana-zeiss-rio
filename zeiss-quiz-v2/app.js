@@ -296,7 +296,15 @@ document.addEventListener('DOMContentLoaded', () => {
             origem: 'Semana Zeiss',
             // Marca a versao da pagina na planilha, para conferir o teste
             // pela fonte do lead e nao so pelo numero do Meta.
-            variante: VARIANTE
+            variante: VARIANTE,
+            // De onde a pessoa veio. Quem decide e o pixel.js, que roda antes
+            // no <head>; aqui so lemos o que ele guardou, pra nao existir uma
+            // segunda regra de canal capaz de divergir da primeira.
+            canal: (function () {
+                if (window.SZ_CANAL) return window.SZ_CANAL;
+                try { return window.sessionStorage.getItem('sz_canal') || 'direto'; }
+                catch (e) { return 'direto'; }
+            })()
         };
 
         // Save locally to display on the coupon page

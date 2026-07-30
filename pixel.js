@@ -19,9 +19,17 @@
  *   Contact       clique no botão de WhatsApp, em qualquer página
  *   FindLocation  clique no link do mapa da loja, nas páginas de cupom
  *
- * Todo evento carrega o parâmetro `variante` (v1/v2), lido do endereço. É o
- * que permite comparar as duas versões no teste A/B pelo funil inteiro, e não
- * só pelo número de leads — que é pequeno demais para decidir sozinho.
+ * Todo evento carrega dois parâmetros:
+ *   variante  v1/v2, lido do endereço — compara as duas versões no teste A/B
+ *             pelo funil inteiro, não só pelo número de leads.
+ *   canal     de onde a pessoa veio (utm_source, ou deduzido do fbclid e do
+ *             referer) — separa anúncio, e-mail do cliente e WhatsApp. Fica
+ *             guardado na sessão porque a página de cupom não recebe a query
+ *             string, e é lá que acontece o Lead.
+ *
+ * NÃO DISPARA FORA DE semanazeissrio.com.br. Teste em servidor local mandava
+ * evento de verdade pro pixel do cliente — 184 eventos de localhost em 30/07,
+ * impossíveis de apagar depois.
  *
  * Purchase fica de fora de propósito: a venda acontece na loja física, dias
  * depois. Quando o cliente passar a entregar os dados de venda, ela entra
@@ -41,6 +49,18 @@
 
   if (!PIXEL_ID) return;
 
+  // Só mede no domínio de produção. Sem isso, todo teste em servidor local
+  // manda evento de verdade pro pixel do cliente: em 30/07 entraram 184
+  // eventos de http://localhost/ e nao ha como apagar depois. Teste local
+  // agora nao dispara nada, e o console diz por que.
+  if (window.location.hostname !== 'semanazeissrio.com.br') {
+    if (window.console && console.info) {
+      console.info('[pixel] desligado fora de semanazeissrio.com.br (host atual: ' +
+                   window.location.hostname + ') — teste local nao suja o dado do cliente');
+    }
+    return;
+  }
+
   var path = window.location.pathname.toLowerCase();
   var isCupom = path.indexOf('cupom') !== -1;
   var isQuiz = path.indexOf('quiz') !== -1;
@@ -51,6 +71,40 @@
   // funil por versão no teste A/B (ViewContent -> Lead -> Contact) em vez de
   // só olhar o total somado das duas.
   var variante = /-v2(\/|$)/.test(path) ? 'v2' : 'v1';
+
+  // ── de onde a pessoa veio ────────────────────────────────────────────
+  // Lê utm_source do endereço e guarda na sessão. Precisa guardar porque a
+  // página de cupom não recebe a query string — sem isso o evento Lead, que
+  // é o que importa, chegaria sem canal. Ordem: o que está na URL manda; se
+  // não tiver, usa o que a sessão guardou; se não tiver nada, tenta adivinhar
+  // pelo referer e, no fim, cai em 'direto'.
+  var canal = (function () {
+    var CHAVE = 'sz_canal';
+    var achado = (/[?&]utm_source=([^&#]+)/i.exec(window.location.search) || [])[1];
+    if (achado) {
+      achado = decodeURIComponent(achado).slice(0, 40);
+      try { window.sessionStorage.setItem(CHAVE, achado); } catch (e) {}
+      return achado;
+    }
+    try {
+      var guardado = window.sessionStorage.getItem(CHAVE);
+      if (guardado) return guardado;
+    } catch (e) {}
+    // fbclid é assinatura de clique em anúncio do Meta, mesmo sem utm
+    if (/[?&]fbclid=/i.test(window.location.search)) return 'meta-ads';
+    var ref = (document.referrer || '').toLowerCase();
+    if (!ref) return 'direto';
+    if (ref.indexOf('facebook') !== -1 || ref.indexOf('instagram') !== -1) return 'meta-organico';
+    if (ref.indexOf('google') !== -1) return 'google';
+    if (ref.indexOf('semanazeissrio.com.br') !== -1) return 'interno';
+    return 'outro';
+  })();
+
+  // Guarda o canal decidido e deixa disponivel pro app.js do quiz, que manda
+  // junto com o lead. Uma regra so, num lugar so: se o app.js repetisse a
+  // logica, as duas iam divergir no primeiro ajuste.
+  try { window.sessionStorage.setItem('sz_canal', canal); } catch (e) {}
+  window.SZ_CANAL = canal;
 
   // Nas páginas de cupom não existe formulário para a correspondência
   // avançada ler, então entregamos e-mail, telefone e nome na mão, a partir
@@ -96,14 +150,15 @@
     fbq('init', PIXEL_ID);
   }
 
-  fbq('track', 'PageView', { variante: variante });
+  fbq('track', 'PageView', { variante: variante, canal: canal });
 
   // ── entrada no funil ────────────────────────────────────────────────
   if (isQuiz) {
     fbq('track', 'ViewContent', {
       content_name: 'Quiz Semana ZEISS',
       content_category: brand,
-      variante: variante
+      variante: variante,
+      canal: canal
     });
   }
 
@@ -112,7 +167,8 @@
     var leadParams = {
       content_name: 'Pre-cadastro Semana ZEISS',
       content_category: brand,
-      variante: variante
+      variante: variante,
+      canal: canal
     };
     if (lead && lead.loja) leadParams.content_ids = [String(lead.loja)];
 
@@ -147,7 +203,7 @@
       href.indexOf('google.com/maps') !== -1;
 
     if (isWhats) {
-      fbq('track', 'Contact', { content_category: brand, variante: variante });
+      fbq('track', 'Contact', { content_category: brand, variante: variante, canal: canal });
       return;
     }
 
@@ -155,6 +211,7 @@
       fbq('track', 'FindLocation', {
         content_category: brand,
         variante: variante,
+        canal: canal,
         content_name: (lead && lead.loja) ? String(lead.loja) : 'loja nao informada'
       });
     }
