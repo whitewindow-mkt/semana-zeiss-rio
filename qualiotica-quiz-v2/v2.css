@@ -10,6 +10,19 @@
 /* Desfoque único e fixo, igual na captura e na página de cupom. Saiu o
    sistema antigo, que ia de 15px a 1.5px conforme a etapa e zerava na
    última página — muito desfoque no começo, nenhum no fim. */
+.v2-body {
+    /* Um tamanho só para os dois textos pretos em caixa alta da página:
+       a linha que qualifica a oferta ("em todas as lentes ZEISS") e as
+       perguntas do quiz. Eram 18,6px e 14,4px com a mesma fonte, o mesmo
+       peso e a mesma cor — 4px de diferença é perto demais para ler como
+       hierarquia e longe demais para ler como igual. Quem separa os dois
+       agora é a posição e o fundo, não o corpo da letra.
+       O teto de 1,25rem é o ponto em que a maior das perguntas ("onde
+       você quer retirar seu desconto?", 36 caracteres) ainda cabe em uma
+       linha na tela mais estreita. */
+    --v2-apoio: clamp(1rem, 4.95vw, 1.25rem);
+}
+
 .v2-body .full-screen-bg {
     filter: blur(10px);
 }
@@ -215,7 +228,7 @@
    jeito de aumentar — aumentar a fonte não é. */
 .v2-lentes {
     font-weight: 800;
-    font-size: clamp(1rem, 4.95vw, 1.25rem);
+    font-size: var(--v2-apoio);
     line-height: 1.2;
     color: var(--text-light);
     margin-top: 0.38rem;
@@ -278,10 +291,12 @@
     letter-spacing: 0.05em;
 }
 
+/* Mesmo corpo da linha da oferta. O !important continua necessário: o
+   style.css base define o tamanho do label dentro de media queries. */
 .v2-form-zone .form-label {
     font-weight: 800;
-    font-size: clamp(0.86rem, 3.85vw, 1rem) !important;
-    letter-spacing: -0.01em;
+    font-size: var(--v2-apoio) !important;
+    letter-spacing: -0.015em;
     color: var(--text-light);
 }
 
