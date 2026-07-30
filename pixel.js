@@ -172,13 +172,27 @@
     };
     if (lead && lead.loja) leadParams.content_ids = [String(lead.loja)];
 
+    // So conta Lead quando existe eventId, ou seja, quando a pessoa passou
+    // pelo formulario. A pagina de cupom e URL publica: link compartilhado,
+    // busca ou recarga abriam ela sem eventId, e sem eventId o Meta nao tem
+    // como saber que dois disparos sao a mesma pessoa — cada abertura virava
+    // um Lead novo. Medido em 30/07: 45 Leads pelo navegador contra 37 pelo
+    // servidor, ~18% de fantasma.
+    //
+    // Quem converteu de verdade e esta com o localStorage bloqueado nao se
+    // perde: o evento de servidor (Worker) dispara igual, pela API de
+    // Conversoes. Nenhuma conversao real deixa de ser contada aqui.
+    var FIRED_KEY = 'sz_lead_enviado';
     if (lead && lead.eventId) {
-      fbq('track', 'Lead', leadParams, { eventID: lead.eventId });
-    } else {
-      // sem eventId (visita direta na página de cupom, sem passar pelo
-      // formulário) não há evento de servidor correspondente, então não
-      // existe risco de contagem dupla
-      fbq('track', 'Lead', leadParams);
+      var jaEnviado = false;
+      try { jaEnviado = window.localStorage.getItem(FIRED_KEY) === lead.eventId; } catch (e) {}
+      if (!jaEnviado) {
+        fbq('track', 'Lead', leadParams, { eventID: lead.eventId });
+        // Marca antes da recarga poder acontecer. Se o localStorage estiver
+        // bloqueado, cai no comportamento antigo e a deduplicacao do Meta
+        // pelo eventID segura — nunca o contrario.
+        try { window.localStorage.setItem(FIRED_KEY, lead.eventId); } catch (e) {}
+      }
     }
   }
 
