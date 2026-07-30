@@ -1,11 +1,16 @@
 /* Meta Pixel — Semana ZEISS
  *
- * Carregado pelas 5 páginas do funil:
- *   /                  -> hub, escolha de bandeira
- *   /zeiss-quiz/       -> formulário, bandeira ZEISS
- *   /zeiss-cupom/      -> conversão, bandeira ZEISS
- *   /qualiotica-quiz/  -> formulário, bandeira QualiÓtica
- *   /qualiotica-cupom/ -> conversão, bandeira QualiÓtica
+ * Carregado pelas 9 páginas do funil — o hub, mais quiz e cupom de cada
+ * bandeira, em v1 e v2:
+ *   /                     -> hub, escolha de bandeira
+ *   /zeiss-quiz/          -> formulário, bandeira ZEISS          (v1)
+ *   /zeiss-cupom/         -> conversão, bandeira ZEISS           (v1)
+ *   /qualiotica-quiz/     -> formulário, bandeira QualiÓtica     (v1)
+ *   /qualiotica-cupom/    -> conversão, bandeira QualiÓtica      (v1)
+ *   /zeiss-quiz-v2/       -> formulário, bandeira ZEISS          (v2)
+ *   /zeiss-cupom-v2/      -> conversão, bandeira ZEISS           (v2)
+ *   /qualiotica-quiz-v2/  -> formulário, bandeira QualiÓtica     (v2)
+ *   /qualiotica-cupom-v2/ -> conversão, bandeira QualiÓtica      (v2)
  *
  * EVENTOS
  *   PageView      todas as páginas
@@ -13,6 +18,10 @@
  *   Lead          páginas de cupom — pré-cadastro concluído
  *   Contact       clique no botão de WhatsApp, em qualquer página
  *   FindLocation  clique no link do mapa da loja, nas páginas de cupom
+ *
+ * Todo evento carrega o parâmetro `variante` (v1/v2), lido do endereço. É o
+ * que permite comparar as duas versões no teste A/B pelo funil inteiro, e não
+ * só pelo número de leads — que é pequeno demais para decidir sozinho.
  *
  * Purchase fica de fora de propósito: a venda acontece na loja física, dias
  * depois. Quando o cliente passar a entregar os dados de venda, ela entra
@@ -36,6 +45,12 @@
   var isCupom = path.indexOf('cupom') !== -1;
   var isQuiz = path.indexOf('quiz') !== -1;
   var brand = path.indexOf('qualiotica') !== -1 ? 'QualiOtica' : 'ZEISS';
+
+  // Versão da página, lida do próprio endereço: /zeiss-quiz-v2/ -> v2, e o
+  // resto é v1. Vai em TODO evento daqui, porque é isso que permite abrir o
+  // funil por versão no teste A/B (ViewContent -> Lead -> Contact) em vez de
+  // só olhar o total somado das duas.
+  var variante = /-v2(\/|$)/.test(path) ? 'v2' : 'v1';
 
   // Nas páginas de cupom não existe formulário para a correspondência
   // avançada ler, então entregamos e-mail, telefone e nome na mão, a partir
@@ -81,13 +96,14 @@
     fbq('init', PIXEL_ID);
   }
 
-  fbq('track', 'PageView');
+  fbq('track', 'PageView', { variante: variante });
 
   // ── entrada no funil ────────────────────────────────────────────────
   if (isQuiz) {
     fbq('track', 'ViewContent', {
       content_name: 'Quiz Semana ZEISS',
-      content_category: brand
+      content_category: brand,
+      variante: variante
     });
   }
 
@@ -95,7 +111,8 @@
   if (isCupom) {
     var leadParams = {
       content_name: 'Pre-cadastro Semana ZEISS',
-      content_category: brand
+      content_category: brand,
+      variante: variante
     };
     if (lead && lead.loja) leadParams.content_ids = [String(lead.loja)];
 
@@ -130,13 +147,14 @@
       href.indexOf('google.com/maps') !== -1;
 
     if (isWhats) {
-      fbq('track', 'Contact', { content_category: brand });
+      fbq('track', 'Contact', { content_category: brand, variante: variante });
       return;
     }
 
     if (isMaps) {
       fbq('track', 'FindLocation', {
         content_category: brand,
+        variante: variante,
         content_name: (lead && lead.loja) ? String(lead.loja) : 'loja nao informada'
       });
     }

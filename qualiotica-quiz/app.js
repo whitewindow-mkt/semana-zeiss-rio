@@ -117,6 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const passosDisparados = new Set();
     const BRAND_LABEL = 'QualiOtica';
 
+    // Versao desta pagina. Vai junto no lead e nos eventos do pixel para dar
+    // para comparar v1 e v2 no teste A/B — sem isso os dois lados chegam
+    // identicos na planilha e o teste nao tem como ser lido.
+    const VARIANTE = 'v1';
+
     // Progression map (Current Step -> Voucher Blur, Page Bg Blur)
     const progressionMap = {
         1: { voucherBlur: '7px', bgBlur: '6px' },    // Step 1 active (initial blur is lighter so client knows it is a coupon)
@@ -174,7 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.fbq) {
                 window.fbq('trackCustom', 'QuizPasso' + stepNumber, {
                     campo: fieldByStep[stepNumber] || '',
-                    content_category: BRAND_LABEL
+                    content_category: BRAND_LABEL,
+                    variante: VARIANTE
                 });
             }
         }
@@ -324,7 +330,10 @@ document.addEventListener('DOMContentLoaded', () => {
             receita: 'exame', // Leads default to scheduling examination validation on thanks page
             loja: loja,
             timestamp: new Date().toISOString(),
-            origem: 'Semana Zeiss - QualiÓtica'
+            origem: 'Semana Zeiss - QualiÓtica',
+            // Marca a versao da pagina na planilha, para conferir o teste
+            // pela fonte do lead e nao so pelo numero do Meta.
+            variante: VARIANTE
         };
 
         // Save locally to display on thank you page
