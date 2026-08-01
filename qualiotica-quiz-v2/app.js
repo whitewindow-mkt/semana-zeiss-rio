@@ -114,13 +114,50 @@ document.addEventListener('DOMContentLoaded', () => {
     // updateNextButtonForStep sai fora e o envio nunca libera.
     function atualizarBotaoDoCampo(campo) { updateNextButtonForStep(stepByField[campo]); updateSubmitState(); }
 
-    // Funil interno do quiz. Guarda quais etapas ja foram contadas para nao
-    // inflar o numero quando a pessoa volta e avanca de novo.
-    const passosDisparados = new Set();
     const BRAND_LABEL = 'QualiOtica';
+
+    // ── funil interno do quiz ────────────────────────────────────────
+    // O evento leva o nome do CAMPO, nunca o numero do passo, e dispara
+    // quando o campo fica valido — nao quando a etapa aparece na tela.
+    //
+    // Corrigido em 01/08/2026, tres defeitos de uma vez:
+    //
+    // 1. Esta versao moveu a loja para primeira pergunta e o numero do passo
+    //    parou de significar a mesma coisa nos dois lados: `QuizPasso2` era
+    //    whatsapp na v1 e nome aqui. A mesma serie somava campos diferentes.
+    // 2. As duas versoes usavam nomes de evento diferentes (`QuizPasso2` x
+    //    `QuizCampo_nome`), entao comparar o funil interno — a razao do
+    //    teste A/B existir — era impossivel.
+    // 3. O passo 1 era pulado de proposito, e cada versao perdia justamente
+    //    o primeiro campo dela. `QuizCampo_loja` nunca foi registrado uma
+    //    vez sequer: a pergunta que esta versao promoveu ao topo para
+    //    resolver o abandono era a unica sem medicao nenhuma.
+    //
+    // Por campo e por preenchimento: mede quem respondeu (nao quem passou
+    // pela tela), fecha os 4 campos nas duas versoes e continua valendo se
+    // a ordem das perguntas mudar de novo.
+    const camposContados = new Set();
+    function marcarCamposPreenchidos() {
+        if (!window.fbq) return;
+        const { validity } = checkFieldsValidity();
+        Object.keys(validity).forEach((campo) => {
+            if (!validity[campo] || camposContados.has(campo)) return;
+            camposContados.add(campo);
+            window.fbq('trackCustom', 'QuizCampo_' + campo, {
+                campo: campo,
+                passo: stepByField[campo] || '',
+                content_category: BRAND_LABEL,
+                variante: VARIANTE
+            });
+        });
+    }
 
     function updateSubmitState() {
         const { validity, completedCount } = checkFieldsValidity();
+
+        // Roda a cada tecla e a cada troca de etapa; quem segura o disparo
+        // repetido e o Set la de cima, nao a frequencia da chamada.
+        marcarCamposPreenchidos();
         if (btnSubmitForm) {
             // Exige os 4 campos. Antes bastava a loja, porque ela era a ultima
             // pergunta — com a loja em primeiro isso liberaria o envio cedo demais.
@@ -158,20 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const dir = direction || (stepNumber >= currentStep ? 'forward' : 'back');
         currentStep = stepNumber;
-
-        // Marca a etapa alcancada, uma vez so e so na ida. A etapa 1 nao
-        // entra: quem abriu a pagina ja conta como ViewContent no pixel.
-        // Com isso da para ler onde a pessoa desiste dentro do quiz.
-        if (dir === 'forward' && stepNumber > 1 && !passosDisparados.has(stepNumber)) {
-            passosDisparados.add(stepNumber);
-            if (window.fbq) {
-                window.fbq('trackCustom', 'QuizCampo_' + (fieldByStep[stepNumber] || stepNumber), {
-                    campo: fieldByStep[stepNumber] || '',
-                    content_category: BRAND_LABEL,
-                    variante: VARIANTE
-                });
-            }
-        }
 
         steps.forEach((stepEl) => {
             const isTarget = Number(stepEl.dataset.step) === stepNumber;

@@ -53,12 +53,48 @@
   // manda evento de verdade pro pixel do cliente: em 30/07 entraram 184
   // eventos de http://localhost/ e nao ha como apagar depois. Teste local
   // agora nao dispara nada, e o console diz por que.
-  if (window.location.hostname !== 'semanazeissrio.com.br') {
+  var EM_PRODUCAO = window.location.hostname === 'semanazeissrio.com.br';
+
+  // Modo espelho, para conferir o funil sem enviar nada ao Meta: a logica
+  // toda executa e cada evento vai para o console e para window.SZ_EVENTOS,
+  // mas o fbevents.js nem chega a ser carregado. Sem isto so havia dois
+  // caminhos — testar em producao (suja o dado) ou nao testar (foi como o
+  // QuizCampo_loja passou dias sem disparar sem ninguem ver).
+  //
+  // So vale FORA de producao, de proposito. Se a flag funcionasse no ar,
+  // bastava alguem abrir a pagina com ela na URL — um link compartilhado, um
+  // print de suporte — para aquela visita parar de contar conversao em
+  // silencio. Em producao ela e simplesmente ignorada.
+  var MODO_TESTE = !EM_PRODUCAO && /[?&]sz_debug=1/.test(window.location.search);
+
+  if (!EM_PRODUCAO && !MODO_TESTE) {
     if (window.console && console.info) {
       console.info('[pixel] desligado fora de semanazeissrio.com.br (host atual: ' +
-                   window.location.hostname + ') — teste local nao suja o dado do cliente');
+                   window.location.hostname + ') — teste local nao suja o dado do ' +
+                   'cliente. Para conferir os eventos sem enviar nada, abra com ?sz_debug=1');
     }
     return;
+  }
+
+  if (MODO_TESTE) {
+    // Define window.fbq ANTES do snippet do Meta. O snippet comeca com
+    // `if (f.fbq) return;`, entao ele sai na primeira linha e nao insere a
+    // tag do fbevents.js — nenhuma requisicao sai daqui.
+    window.SZ_EVENTOS = [];
+    window.fbq = function () {
+      var args = Array.prototype.slice.call(arguments);
+      if (args[0] !== 'track' && args[0] !== 'trackCustom') return;
+      window.SZ_EVENTOS.push({
+        evento: args[1],
+        params: args[2] || {},
+        opcoes: args[3] || null
+      });
+      if (window.console && console.log) {
+        console.log('[pixel:teste] ' + args[1], args[2] || {});
+      }
+    };
+    window.fbq.queue = [];
+    window._fbq = window.fbq;
   }
 
   var path = window.location.pathname.toLowerCase();

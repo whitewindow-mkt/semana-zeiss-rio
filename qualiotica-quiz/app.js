@@ -106,16 +106,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const fieldByStep = { 1: 'nome', 2: 'whatsapp', 3: 'email', 4: 'loja' };
+    const stepByField = {};
+    Object.keys(fieldByStep).forEach((n) => { stepByField[fieldByStep[n]] = Number(n); });
 
-    // Funil interno do quiz. Guarda quais etapas ja foram contadas para nao
-    // inflar o numero quando a pessoa volta e avanca de novo.
-    const passosDisparados = new Set();
     const BRAND_LABEL = 'QualiOtica';
 
     // Versao desta pagina. Vai junto no lead e nos eventos do pixel para dar
     // para comparar v1 e v2 no teste A/B — sem isso os dois lados chegam
     // identicos na planilha e o teste nao tem como ser lido.
     const VARIANTE = 'v1';
+
+    // ── funil interno do quiz ────────────────────────────────────────
+    // O evento leva o nome do CAMPO, nunca o numero do passo, e dispara
+    // quando o campo fica valido — nao quando a etapa aparece na tela.
+    //
+    // Corrigido em 01/08/2026, tres defeitos de uma vez:
+    //
+    // 1. A v2 moveu a loja para primeira pergunta e o numero do passo parou
+    //    de significar a mesma coisa nos dois lados: `QuizPasso2` era
+    //    whatsapp aqui e nome na v2. A mesma serie somava campos diferentes.
+    // 2. As duas versoes usavam nomes de evento diferentes (`QuizPasso2` x
+    //    `QuizCampo_nome`), entao comparar o funil interno — a razao do
+    //    teste A/B existir — era impossivel.
+    // 3. O passo 1 era pulado de proposito, e cada versao perdia justamente
+    //    o primeiro campo dela. `QuizCampo_loja` nunca foi registrado uma
+    //    vez sequer: a pergunta que a v2 promoveu ao topo para resolver o
+    //    abandono era a unica sem medicao nenhuma.
+    //
+    // Por campo e por preenchimento: mede quem respondeu (nao quem passou
+    // pela tela), fecha os 4 campos nas duas versoes e continua valendo se
+    // a ordem das perguntas mudar de novo.
+    const camposContados = new Set();
+    function marcarCamposPreenchidos() {
+        if (!window.fbq) return;
+        const { validity } = checkFieldsValidity();
+        Object.keys(validity).forEach((campo) => {
+            if (!validity[campo] || camposContados.has(campo)) return;
+            camposContados.add(campo);
+            window.fbq('trackCustom', 'QuizCampo_' + campo, {
+                campo: campo,
+                passo: stepByField[campo] || '',
+                content_category: BRAND_LABEL,
+                variante: VARIANTE
+            });
+        });
+    }
 
     // Progression map (Current Step -> Voucher Blur, Page Bg Blur)
     const progressionMap = {
@@ -127,6 +162,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateVoucherPreview() {
         const { validity } = checkFieldsValidity();
+
+        // Roda a cada tecla e a cada troca de etapa; quem segura o disparo
+        // repetido e o Set la de cima, nao a frequencia da chamada.
+        marcarCamposPreenchidos();
 
         // Progressive blur: sharpens a bit with each step advanced (not on every keystroke).
         // Full reveal happens on the next page (obrigado.html) right after "Gerar meu cupom".
@@ -165,20 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const dir = direction || (stepNumber >= currentStep ? 'forward' : 'back');
         currentStep = stepNumber;
-
-        // Marca a etapa alcancada, uma vez so e so na ida. A etapa 1 nao
-        // entra: quem abriu a pagina ja conta como ViewContent no pixel.
-        // Com isso da para ler onde a pessoa desiste dentro do quiz.
-        if (dir === 'forward' && stepNumber > 1 && !passosDisparados.has(stepNumber)) {
-            passosDisparados.add(stepNumber);
-            if (window.fbq) {
-                window.fbq('trackCustom', 'QuizPasso' + stepNumber, {
-                    campo: fieldByStep[stepNumber] || '',
-                    content_category: BRAND_LABEL,
-                    variante: VARIANTE
-                });
-            }
-        }
 
         steps.forEach((stepEl) => {
             const isTarget = Number(stepEl.dataset.step) === stepNumber;
