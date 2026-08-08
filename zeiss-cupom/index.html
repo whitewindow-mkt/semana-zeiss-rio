@@ -6,13 +6,13 @@
     <title>Cupom confirmado | Semana Zeiss 50% OFF</title>
     <meta name="description" content="Seu cupom de 50% de desconto foi confirmado. Veja como usar na loja Zeiss Vision Center e agende sua visita à loja.">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="stylesheet" href="style.css?v=1.5">
+    <link rel="stylesheet" href="style.css?v=1.6">
 
     <!-- Icons (Lucide Icons via CDN) -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Meta Pixel — Semana ZEISS -->
-    <script src="/pixel.js?v=6"></script>
+    <script src="/pixel.js?v=7"></script>
 
     <!-- Cloudflare Web Analytics -->
     <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "98ebdb1d451549c5970b1c91e564b337"}'></script>
@@ -43,7 +43,7 @@
                         <span>CONFIRMADO</span>
                     </div>
                 </div>
-                <h1 class="campaign-main-title">Prontinho, <span id="lead-name">Nathan</span><span class="highlight-line">SEMANA ZEISS VEM AÍ!<br>DE 08 A 16 DE AGOSTO</span></h1>
+                <h1 class="campaign-main-title">Prontinho, <span id="lead-name">Nathan</span><span class="highlight-line">A SEMANA ZEISS COMEÇOU!<br><span id="faixa-prazo">SEU CUPOM JÁ VALE HOJE</span></span></h1>
             </div>
 
             <!-- Quiz progress, now shown complete -->
@@ -78,6 +78,11 @@
             </div>
 
             <!-- Chamada do brinde + unidade escolhida. O lembrete da receita fecha o bloco. -->
+            <!-- Botao grande pra central de atendimento (agente de IA) da marca. -->
+            <a href="#" id="whatsapp-cta" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:0.45rem;width:100%;margin:0 0 0.7rem 0;padding:0.85rem 1rem;background:#25D366;color:#fff;font-weight:700;font-size:0.95rem;border-radius:10px;text-decoration:none;box-shadow:0 2px 8px rgba(37,211,102,0.28);">
+                <i data-lucide="message-circle" style="width:17px;height:17px;flex-shrink:0;"></i>
+                <span>Falar com a loja no WhatsApp</span>
+            </a>
             <p class="brinde-line" style="text-align: center; color: var(--zeiss-blue); line-height: 1.35; margin: 1rem 0 0.5rem 0;">
                 Use o Cupom na Loja escolhida<br>e Ganhe um Brinde especial!
             </p>
@@ -241,6 +246,8 @@
             const encodedMessage = encodeURIComponent(rawMessage);
             const whatsEl = document.getElementById('whatsapp-link');
             if (whatsEl) whatsEl.href = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
+            const ctaEl = document.getElementById('whatsapp-cta');
+            if (ctaEl) ctaEl.href = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
 
             // 4. Botão discreto para o Google Maps da unidade
             const mapsLinkEl = document.getElementById('maps-link');
@@ -249,5 +256,7 @@
             }
         });
     </script>
+
+<script>(function(){var fim=new Date('2026-08-16T23:59:59-03:00');var dias=Math.ceil((fim-new Date())/86400000);var el=document.getElementById('faixa-prazo');if(!el)return;var t=dias>1?('AINDA DÁ TEMPO: '+dias+' DIAS'):(dias===1?'ÚLTIMO DIA!':'DE 08 A 16 DE AGOSTO');el.textContent=t;})();</script>
 </body>
 </html>
