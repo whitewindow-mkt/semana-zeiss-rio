@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semana Zeiss Rio 2026 | 50% OFF em lentes premium</title>
-    <meta name="description" content="A maior campanha do ano pra trocar seus óculos chegou ao Rio. 50% OFF em lentes ZEISS na sua unidade Zeiss Vision Center ou QualiÓtica mais próxima.">
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="A maior campanha do ano pra trocar seus óculos chegou ao Rio. 50% OFF em lentes ZEISS.">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/zeiss-quiz-v2/v2.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Meta Pixel — Semana ZEISS -->
@@ -14,45 +15,44 @@
     <!-- Cloudflare Web Analytics -->
     <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "98ebdb1d451549c5970b1c91e564b337"}'></script>
 </head>
-<body>
+<body class="v2-body intro-completed">
 
-    <div class="full-screen-bg" id="bg-container"></div>
-    <div class="bg-dark-overlay"></div>
+    <!-- Full-screen Blurred Zeiss Store Background -->
+    <div class="full-screen-bg" id="bg-container">
+        <div class="bg-dark-overlay"></div>
+    </div>
 
-    <main class="hub-main">
-        <section class="hub-card">
-            <div class="hub-badge">
-                <i data-lucide="bell" style="width: 12px; height: 12px;"></i>
-                <span>PREPARE-SE</span>
+    <main class="main-container center-layout">
+        <section class="card form-card v2-card" id="form-card">
+            
+            <!-- BANNER: recorte do criativo da campanha -->
+            <div class="v2-banner">
+                <img src="/zeiss-quiz-v2/assets/banner-loira.jpg?v=2" alt="Semana ZEISS — 50% OFF em lentes ZEISS" class="v2-banner-img" width="960" height="580">
+                <div class="v2-banner-scrim"></div>
+                <div class="v2-banner-copy">
+                    <span class="v2-banner-kicker">COMEÇOU</span>
+                    <span class="v2-banner-title"><span class="v2-t-semana">Semana</span><span class="v2-t-zeiss">ZEISS</span></span>
+                </div>
             </div>
 
-            <h1 class="hub-title"><span class="hub-line">A maior campanha do ano</span><br>pra trocar seus óculos<span class="hub-highlight">50% OFF em lentes ZEISS</span></h1>
-
-            <div class="hub-choice-label">Escolha onde você vai retirar o seu desconto:</div>
-
-            <div class="hub-options">
-                <a href="/zeiss-quiz/" class="hub-option hub-option--zeiss">
-                    <img src="assets/zeiss-logo-real.webp" alt="ZEISS" class="hub-option-logo hub-option-logo--zeiss">
-                    <span class="hub-option-text">Zeiss Vision Center</span>
-                    <span class="hub-option-cta">Retirar meu cupom <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i></span>
+            <!-- ANÚNCIO DO PRÊMIO -->
+            <div class="v2-hero">
+                <h1 class="v2-oferta">
+                    <span class="v2-off">50% OFF</span>
+                </h1>
+                <p class="v2-lentes">em todas as lentes ZEISS</p>
+                <div class="v2-faixa-resgate" style="margin-bottom: 1.5rem;">Resgate seu cupom<br>+ brinde especial</div>
+                
+                <a href="/zeiss-quiz-v2/" class="btn-submit" style="display: flex; align-items: center; justify-content: center; text-decoration: none; width: 100%; margin-top: 1rem; font-family: var(--font-display); text-transform: uppercase; font-weight: 900; font-size: clamp(0.84rem, 3.65vw, 0.96rem); padding: 1rem; border-radius: 4px; background: var(--zeiss-blue); color: white;">
+                    Resgatar meu cupom <i data-lucide="arrow-right" style="width: 18px; height: 18px; margin-left: 8px;"></i>
                 </a>
-
-                <a href="/qualiotica-quiz/" class="hub-option hub-option--quali">
-                    <img src="assets/qualiotica-logo-new.png" alt="QualiÓtica" class="hub-option-logo hub-option-logo--quali">
-                    <span class="hub-option-text">QualiÓtica</span>
-                    <span class="hub-option-cta">Retirar meu cupom <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i></span>
-                </a>
             </div>
 
-            <div class="hub-footer-note">
-                <i data-lucide="map-pin" style="width: 12px; height: 12px;"></i>
-                Rio de Janeiro, Niterói e São Gonçalo
-            </div>
         </section>
     </main>
 
-    <footer class="hub-footer">
-        <p>&copy; 2026 Semana Zeiss Rio. Promoção exclusiva para as lojas físicas participantes Zeiss Vision Center e QualiÓtica. Imagens meramente ilustrativas.</p>
+    <footer style="text-align: center; color: white; padding: 1rem; font-size: 0.7rem; opacity: 0.7;">
+        <p>&copy; 2026 Semana Zeiss Rio. Promoção exclusiva para as lojas físicas participantes Zeiss Vision Center. Imagens meramente ilustrativas.</p>
     </footer>
 
     <script>lucide.createIcons();</script>
