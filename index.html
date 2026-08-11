@@ -5,56 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semana Zeiss Rio 2026 | 50% OFF em lentes premium</title>
     <meta name="description" content="A maior campanha do ano pra trocar seus óculos chegou ao Rio. 50% OFF em lentes ZEISS.">
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="/zeiss-quiz-v2/v2.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Meta Pixel — Semana ZEISS -->
     <script src="/pixel.js?v=6"></script>
 
     <!-- Cloudflare Web Analytics -->
     <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "98ebdb1d451549c5970b1c91e564b337"}'></script>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0b1220;
+            overflow: hidden;
+        }
+        
+        .full-bg-link {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+        }
+
+        .full-bg-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+    </style>
 </head>
-<body class="v2-body intro-completed">
+<body>
 
-    <!-- Full-screen Blurred Zeiss Store Background -->
-    <div class="full-screen-bg" id="bg-container">
-        <div class="bg-dark-overlay"></div>
-    </div>
+    <a href="/zeiss-quiz-v2/" class="full-bg-link" title="Resgatar meu cupom">
+        <img src="/zeiss-quiz-v2/assets/banner-loira.jpg?v=2" alt="Semana ZEISS — 50% OFF em lentes ZEISS" class="full-bg-image">
+    </a>
 
-    <main class="main-container center-layout">
-        <section class="card form-card v2-card" id="form-card">
-            
-            <!-- BANNER: recorte do criativo da campanha -->
-            <div class="v2-banner">
-                <img src="/zeiss-quiz-v2/assets/banner-loira.jpg?v=2" alt="Semana ZEISS — 50% OFF em lentes ZEISS" class="v2-banner-img" width="960" height="580">
-                <div class="v2-banner-scrim"></div>
-                <div class="v2-banner-copy">
-                    <span class="v2-banner-kicker">COMEÇOU</span>
-                    <span class="v2-banner-title"><span class="v2-t-semana">Semana</span><span class="v2-t-zeiss">ZEISS</span></span>
-                </div>
-            </div>
-
-            <!-- ANÚNCIO DO PRÊMIO -->
-            <div class="v2-hero">
-                <h1 class="v2-oferta">
-                    <span class="v2-off">50% OFF</span>
-                </h1>
-                <p class="v2-lentes">em todas as lentes ZEISS</p>
-                <div class="v2-faixa-resgate" style="margin-bottom: 1.5rem;">Resgate seu cupom<br>+ brinde especial</div>
-                
-                <a href="/zeiss-quiz-v2/" class="btn-submit" style="display: flex; align-items: center; justify-content: center; text-decoration: none; width: 100%; margin-top: 1rem; font-family: var(--font-display); text-transform: uppercase; font-weight: 900; font-size: clamp(0.84rem, 3.65vw, 0.96rem); padding: 1rem; border-radius: 4px; background: var(--zeiss-blue); color: white;">
-                    Resgatar meu cupom <i data-lucide="arrow-right" style="width: 18px; height: 18px; margin-left: 8px;"></i>
-                </a>
-            </div>
-
-        </section>
-    </main>
-
-    <footer style="text-align: center; color: white; padding: 1rem; font-size: 0.7rem; opacity: 0.7;">
-        <p>&copy; 2026 Semana Zeiss Rio. Promoção exclusiva para as lojas físicas participantes Zeiss Vision Center. Imagens meramente ilustrativas.</p>
-    </footer>
-
-    <script>lucide.createIcons();</script>
 </body>
 </html>
