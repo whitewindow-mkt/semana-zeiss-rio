@@ -219,6 +219,6 @@
     <!-- JS Logic -->
     <script src="app.js?v=1.12"></script>
 
-<script>(function(){var fim=new Date('2026-08-16T23:59:59-03:00');var dias=Math.ceil((fim-new Date())/86400000);var el=document.getElementById('faixa-prazo');if(!el)return;var t=dias>1?('TERMINA EM '+dias+' DIAS'):(dias===1?'ÚLTIMO DIA':'DE 08 A 16 DE AGOSTO');el.textContent='50% OFF · '+t;})();</script>
+<script>(function(){var fim=new Date('2026-08-16T23:59:59-03:00');var el=document.getElementById('faixa-prazo');if(!el)return;var ms=fim-new Date();var t;if(ms<=0){t='ENCERRADA';}else{var d=Math.floor(ms/86400000);t=d>=1?('TERMINA EM '+d+(d===1?' DIA':' DIAS')):'ÚLTIMAS HORAS';}el.textContent='50% OFF · '+t;})();</script>
 </body>
 </html>
