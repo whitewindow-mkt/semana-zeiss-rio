@@ -267,6 +267,23 @@
     }
 }
 
+/* Prazo. Entrou em 14/08/2026, na virada da comunicação de "começou" para
+   "últimos dias": a página anunciava a campanha sem dizer quando ela acaba, e
+   sem data a urgência do anúncio morre no clique. Discreto de propósito — quem
+   manda no bloco é o 50% OFF, a data só fecha a conta. */
+.v2-prazo {
+    margin-top: 0.7rem;
+    font-size: clamp(0.78rem, 3.2vw, 0.9rem);
+    line-height: 1.35;
+    color: var(--zeiss-blue);
+    opacity: 0.85;
+}
+
+.v2-prazo strong {
+    font-weight: 800;
+    opacity: 1;
+}
+
 /* ── FORMULÁRIO ────────────────────────────────────────────── */
 
 .v2-form-zone {
