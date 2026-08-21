@@ -7,11 +7,11 @@
 <meta name="description" content="A Semana ZEISS 2026 foi encerrada.">
 <meta property="og:title" content="Semana ZEISS 2026 encerrada">
 <meta property="og:description" content="A Semana ZEISS 2026 foi encerrada.">
-<meta property="og:image" content="https://semanazeissrio.com.br/assets/hero-zeiss.webp">
+<meta property="og:image" content="https://semanazeissrio.com.br/assets/foto-zeiss.webp">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="preload" as="image" href="/assets/hero-zeiss.webp">
+<link rel="preload" as="image" href="/assets/foto-zeiss.webp">
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/archivo-latin.woff2" crossorigin>
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "98ebdb1d451549c5970b1c91e564b337"}'></script>
 <style>
@@ -21,64 +21,80 @@
     font-weight:100 900;font-style:normal;font-display:swap;
   }
   :root{
-    --zeiss:#141E8C;        /* azul oficial, amostrado do proprio logo */
-    --zeiss-claro:#9AC0F2;
-    --preto:#060911;
+    /* azul da campanha ZEISS, amostrado do banner oficial deles */
+    --zeiss:#0F2DB3;
+    --branco:#FFFFFF;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;height:100%;overflow:hidden}
-  body{background:var(--preto);color:#fff;
+  body{background:var(--zeiss);color:var(--branco);
        font-family:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
        -webkit-font-smoothing:antialiased}
 
-  .hero{position:relative;height:100svh;width:100%;overflow:hidden;
-        display:flex;align-items:center}
+  /* dois blocos SOLIDOS, corte reto. nenhum degrade em lugar nenhum */
+  .hero{height:100svh;width:100%;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
 
-  .bg{position:absolute;inset:0;width:100%;height:100%;
-      object-fit:cover;object-position:center;z-index:0}
+  .painel{background:var(--zeiss);display:flex;flex-direction:column;
+          justify-content:center;position:relative;
+          padding:clamp(28px,4.6vw,80px)}
 
-  .texto{position:relative;z-index:1;
-         padding-left:clamp(28px,6vw,110px);
-         padding-right:clamp(24px,3vw,48px);
-         max-width:min(60vw,880px)}
+  .logo{height:clamp(38px,4.4vw,64px);width:auto;display:block;
+        position:absolute;top:clamp(28px,4.6vw,80px);left:clamp(28px,4.6vw,80px)}
 
-  .logo{height:clamp(26px,3vw,42px);width:auto;display:block;
-        margin-bottom:clamp(24px,3.6vw,44px);opacity:.96}
+  /* os colchetes de enquadramento sao a assinatura grafica da ZEISS */
+  .marco{position:relative;align-self:start;
+         padding:clamp(22px,3vw,48px) clamp(20px,2.6vw,44px)}
+  .marco::before,.marco::after{content:"";position:absolute;
+    width:clamp(26px,3.4vw,58px);height:clamp(26px,3.4vw,58px);
+    border:2px solid var(--branco)}
+  .marco::before{top:0;left:0;border-right:0;border-bottom:0}
+  .marco::after{bottom:0;right:0;border-left:0;border-top:0}
 
   .titulo{margin:0;font-weight:800;text-transform:uppercase;
-          letter-spacing:-.035em;line-height:.84;
-          font-size:clamp(2.6rem,7.4vw,7rem)}
+          letter-spacing:-.03em;line-height:.86;
+          font-size:clamp(2rem,4.6vw,4.4rem);color:var(--branco)}
   .titulo span{display:block}
-  .titulo em{font-style:normal;color:var(--zeiss-claro)}
 
+  .foto{position:relative;overflow:hidden;background:var(--zeiss)}
+  .foto img{width:100%;height:100%;object-fit:cover;object-position:60% center;display:block}
 
-  @media (max-height:640px){
-    .logo{height:24px;margin-bottom:16px}
-    .titulo{font-size:clamp(2.1rem,5.4vw,3.4rem)}
+  @media (max-height:620px){
+    .logo{height:34px}
+    .titulo{font-size:clamp(1.7rem,3.6vw,2.6rem)}
+    .marco{padding:18px 16px}
   }
 
-  @media (max-width:820px){
-    .hero{align-items:flex-end}
-    .bg{object-position:62% center}
-    .texto{max-width:100%;width:100%;
-           padding:clamp(70px,20vw,120px) clamp(26px,7vw,38px) clamp(40px,10vw,60px);
-           background:linear-gradient(to top, rgba(6,9,17,.95) 40%, rgba(6,9,17,.62) 70%, rgba(6,9,17,0) 100%)}
-    .titulo{font-size:clamp(2.3rem,10.5vw,3.7rem)}
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr;grid-template-rows:44svh 56svh}
+    .foto{order:1}
+    .foto img{object-position:58% center}
+    .painel{order:2;justify-content:center;padding:clamp(26px,7vw,44px)}
+    .logo{position:static;align-self:flex-start;   /* sem isso o flex estica a marca */
+           height:clamp(32px,8vw,44px);margin-bottom:clamp(18px,4vw,28px)}
+    .marco{align-self:start}
+    .titulo{font-size:clamp(1.9rem,8.2vw,3rem)}
   }
 </style>
 </head>
 <body>
 
 <main class="hero">
-  <img class="bg" src="/assets/hero-zeiss.webp" alt="" width="2560" height="1440" fetchpriority="high">
 
-  <div class="texto">
+  <section class="painel">
     <img class="logo" src="/assets/zeiss-logo-branca.png" alt="ZEISS" width="640" height="640">
-    <h1 class="titulo">
-      <span>Semana ZEISS</span>
-      <span>2026 <em>encerrada</em></span>
-    </h1>
-  </div>
+    <div class="marco">
+      <h1 class="titulo">
+        <span>Semana ZEISS</span>
+        <span>2026</span>
+        <span>encerrada</span>
+      </h1>
+    </div>
+  </section>
+
+  <section class="foto">
+    <img src="/assets/foto-zeiss.webp" alt="" width="1700" height="1760" fetchpriority="high">
+  </section>
+
 </main>
 
 </body>
