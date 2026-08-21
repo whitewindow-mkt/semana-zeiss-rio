@@ -1,48 +1,131 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana Zeiss Rio 2026 | 50% OFF em lentes premium</title>
-    <meta name="description" content="A maior campanha do ano pra trocar seus óculos chegou ao Rio. 50% OFF em lentes ZEISS.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana ZEISS 2026 — encerrada</title>
+<meta name="description" content="A Semana ZEISS 2026 foi encerrada. Obrigado a todos que participaram.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Semana ZEISS 2026 — encerrada">
+<meta property="og:description" content="Obrigado a todos que participaram. Até a próxima edição.">
+<meta property="og:image" content="https://semanazeissrio.com.br/assets/modelo-zeiss.webp">
+<link rel="preload" as="image" href="/assets/modelo-zeiss.webp">
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "98ebdb1d451549c5970b1c91e564b337"}'></script>
+<style>
+  :root{
+    --azul:#164191;          /* o mesmo azul do fundo da foto — a emenda some */
+    --azul-fundo:#0f2f6b;
+    --claro:#9dc2f0;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--azul);
+    color:#fff;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
 
-    <!-- Meta Pixel — Semana ZEISS -->
-    <script src="/pixel.js?v=6"></script>
+  .hero{
+    min-height:100svh;
+    display:grid;
+    grid-template-columns:1fr 1.12fr;
+    align-items:center;
+    /* azul CHAPADO no lado da foto: o degrade morre antes dos 50%, entao a area
+       atras da imagem e exatamente #164191 — o mesmo do fundo dela */
+    background:
+      linear-gradient(100deg, rgba(9,30,71,.55) 0%, rgba(9,30,71,0) 46%),
+      var(--azul);
+  }
 
-    <!-- Cloudflare Web Analytics -->
-    <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "98ebdb1d451549c5970b1c91e564b337"}'></script>
+  .texto{
+    padding:clamp(32px,5vw,80px);
+    padding-right:clamp(24px,3vw,48px);
+  }
 
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0b1220;
-            overflow: hidden;
-        }
-        
-        .full-bg-link {
-            display: block;
-            width: 100%;
-            height: 100%;
-            text-decoration: none;
-        }
+  .marca{
+    display:flex;
+    align-items:center;
+    gap:clamp(14px,1.8vw,26px);
+    margin-bottom:clamp(26px,4vw,46px);
+  }
+  .marca img{display:block;height:clamp(24px,2.6vw,38px);width:auto}
+  .marca .risco{width:1px;height:clamp(24px,2.6vw,36px);background:rgba(255,255,255,.3)}
+  .marca .zeiss{height:clamp(30px,3.4vw,48px)}
 
-        .full-bg-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center center;
-            display: block;
-        }
-    </style>
+  .titulo{
+    margin:0;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:-.02em;
+    line-height:.92;
+    font-size:clamp(2.5rem,6.2vw,5.6rem);
+  }
+  .titulo span{display:block}
+  .titulo .encerrada{color:var(--claro);margin-top:.08em}
+
+  .linha{border:0;width:clamp(56px,7vw,120px);height:3px;background:var(--claro);
+         margin:clamp(26px,3.4vw,44px) 0 clamp(18px,2.4vw,28px)}
+
+  .obrigado{
+    margin:0;max-width:32ch;
+    font-size:clamp(1rem,1.5vw,1.35rem);
+    line-height:1.55;color:rgba(255,255,255,.85);
+  }
+
+  .lojas{
+    margin-top:clamp(30px,4.5vw,56px);
+    font-size:clamp(.72rem,1vw,.85rem);
+    letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(255,255,255,.5);
+  }
+
+  .foto{background:var(--azul);height:100%;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+  /* contain, nao cover: o fundo da foto e o MESMO azul do hero, entao a emenda
+     desaparece e a imagem inteira aparece — as maos e o oculos nao sao cortados */
+  .foto img{width:100%;height:auto;max-height:88svh;object-fit:contain;object-position:center bottom;display:block}
+
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr;min-height:100svh;align-content:center}
+    .texto{padding:clamp(28px,7vw,44px);order:2}
+    .foto{order:1;max-height:44svh;align-items:flex-end}
+    .foto img{max-height:44svh;object-fit:contain}
+    .titulo{font-size:clamp(2.3rem,10vw,3.6rem)}
+  }
+</style>
 </head>
 <body>
 
-    <a href="/zeiss-quiz-v2/" class="full-bg-link" title="Resgatar meu cupom">
-        <img src="/assets/store_bg_zeiss.jpg" alt="Semana ZEISS — 50% OFF em lentes ZEISS" class="full-bg-image">
-    </a>
+<main class="hero">
+
+  <div class="texto">
+    <div class="marca">
+      <img class="zeiss" src="/assets/zeiss-logo-real.webp" alt="ZEISS" width="960" height="960">
+      <span class="risco" aria-hidden="true"></span>
+      <img src="/assets/qualiotica-logo-branca.png" alt="QualiÓtica" width="416" height="156">
+    </div>
+
+    <h1 class="titulo">
+      <span>Semana</span>
+      <span>ZEISS 2026</span>
+      <span class="encerrada">Encerrada</span>
+    </h1>
+
+    <hr class="linha">
+
+    <p class="obrigado">
+      Obrigado a todos que participaram.<br>
+      Até a próxima edição.
+    </p>
+
+    <p class="lojas">ZEISS Vision Center &nbsp;·&nbsp; QualiÓtica &nbsp;·&nbsp; Rio de Janeiro</p>
+  </div>
+
+  <div class="foto">
+    <img src="/assets/modelo-zeiss.webp" alt="" width="1080" height="880" fetchpriority="high">
+  </div>
+
+</main>
 
 </body>
 </html>
