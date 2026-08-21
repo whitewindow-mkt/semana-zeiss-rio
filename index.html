@@ -20,9 +20,14 @@
     src:url("/assets/fonts/archivo-latin.woff2") format("woff2");
     font-weight:100 900;font-style:normal;font-display:swap;
   }
+  :root{
+    --zeiss:#141E8C;        /* azul oficial, amostrado do proprio logo */
+    --zeiss-claro:#9AC0F2;
+    --preto:#060911;
+  }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;height:100%;overflow:hidden}
-  body{background:#05080f;color:#fff;
+  body{background:var(--preto);color:#fff;
        font-family:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
        -webkit-font-smoothing:antialiased}
 
@@ -35,24 +40,24 @@
   .texto{position:relative;z-index:1;
          padding-left:clamp(28px,6vw,110px);
          padding-right:clamp(24px,3vw,48px);
-         max-width:min(58vw,780px)}
+         max-width:min(60vw,880px)}
 
   .logo{height:clamp(26px,3vw,42px);width:auto;display:block;
         margin-bottom:clamp(24px,3.6vw,44px);opacity:.96}
 
   .titulo{margin:0;font-weight:800;text-transform:uppercase;
-          letter-spacing:-.028em;line-height:.88;
-          font-size:clamp(2.3rem,5.8vw,5.2rem)}
+          letter-spacing:-.035em;line-height:.84;
+          font-size:clamp(2.6rem,7.4vw,7rem)}
   .titulo span{display:block}
-  .titulo em{font-style:normal;color:#8fb6e8}
+  .titulo em{font-style:normal;color:var(--zeiss-claro)}
 
   .nota{margin:clamp(22px,3vw,38px) 0 0;
         font-size:clamp(.8rem,1.05vw,.95rem);
-        letter-spacing:.2em;text-transform:uppercase;color:#b9c9e0}
+        letter-spacing:.2em;text-transform:uppercase;color:#aebfda}
 
   @media (max-height:640px){
     .logo{height:24px;margin-bottom:16px}
-    .titulo{font-size:clamp(1.9rem,4.6vw,3rem)}
+    .titulo{font-size:clamp(2.1rem,5.4vw,3.4rem)}
     .nota{margin-top:16px}
   }
 
@@ -61,8 +66,8 @@
     .bg{object-position:62% center}
     .texto{max-width:100%;width:100%;
            padding:clamp(70px,20vw,120px) clamp(26px,7vw,38px) clamp(40px,10vw,60px);
-           background:linear-gradient(to top, rgba(5,8,15,.94) 40%, rgba(5,8,15,.6) 70%, rgba(5,8,15,0) 100%)}
-    .titulo{font-size:clamp(2.1rem,9.4vw,3.3rem)}
+           background:linear-gradient(to top, rgba(6,9,17,.95) 40%, rgba(6,9,17,.62) 70%, rgba(6,9,17,0) 100%)}
+    .titulo{font-size:clamp(2.3rem,10.5vw,3.7rem)}
   }
 </style>
 </head>
