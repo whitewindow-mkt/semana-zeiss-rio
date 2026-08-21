@@ -7,11 +7,12 @@
 <meta name="description" content="A Semana ZEISS 2026 foi encerrada.">
 <meta property="og:title" content="Semana ZEISS 2026 encerrada">
 <meta property="og:description" content="A Semana ZEISS 2026 foi encerrada.">
-<meta property="og:image" content="https://semanazeissrio.com.br/assets/foto-zeiss.webp">
+<meta property="og:image" content="https://semanazeissrio.com.br/assets/loira-zeiss.webp">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="preload" as="image" href="/assets/foto-zeiss.webp">
+<link rel="preload" as="image" href="/assets/loira-zeiss.webp" media="(min-width:861px)">
+<link rel="preload" as="image" href="/assets/loira-zeiss-vert.webp" media="(max-width:860px)">
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/archivo-latin.woff2" crossorigin>
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "98ebdb1d451549c5970b1c91e564b337"}'></script>
 <style>
@@ -21,9 +22,9 @@
     font-weight:100 900;font-style:normal;font-display:swap;
   }
   :root{
-    /* azul da campanha ZEISS, amostrado do banner oficial deles */
-    --zeiss:#0F2DB3;
+    --zeiss:#0F2DB3;          /* azul da campanha, amostrado do site oficial */
     --branco:#FFFFFF;
+    --barra:clamp(52px,6.6svh,86px);
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;height:100%;overflow:hidden}
@@ -31,57 +32,68 @@
        font-family:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
        -webkit-font-smoothing:antialiased}
 
-  /* dois blocos SOLIDOS, corte reto. nenhum degrade em lugar nenhum */
-  .hero{height:100svh;width:100%;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+  .hero{position:relative;height:100svh;width:100%;overflow:hidden}
 
-  .painel{background:var(--zeiss);display:flex;flex-direction:column;
-          justify-content:center;position:relative;
-          padding:clamp(28px,4.6vw,80px)}
+  /* foto em TELA CHEIA. nada de dividir a tela */
+  .bg{position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:right bottom;z-index:0}
 
-  .logo{height:clamp(38px,4.4vw,64px);width:auto;display:block;
-        position:absolute;top:clamp(28px,4.6vw,80px);left:clamp(28px,4.6vw,80px)}
+  .conteudo{position:absolute;z-index:2;
+            left:clamp(28px,5vw,92px);
+            top:50%;transform:translateY(-54%)}
 
-  /* os colchetes de enquadramento sao a assinatura grafica da ZEISS */
-  .marco{position:relative;align-self:start;
-         padding:clamp(22px,3vw,48px) clamp(20px,2.6vw,44px)}
+  .logo{height:clamp(38px,4.2vw,62px);width:auto;display:block;
+        position:absolute;z-index:2;
+        top:clamp(28px,4.4vw,72px);left:clamp(28px,5vw,92px)}
+
+  /* colchetes de enquadramento: a assinatura grafica da ZEISS */
+  .marco{position:relative;padding:clamp(24px,3.2vw,52px) clamp(22px,2.8vw,46px)}
   .marco::before,.marco::after{content:"";position:absolute;
-    width:clamp(26px,3.4vw,58px);height:clamp(26px,3.4vw,58px);
+    width:clamp(28px,3.6vw,62px);height:clamp(28px,3.6vw,62px);
     border:2px solid var(--branco)}
   .marco::before{top:0;left:0;border-right:0;border-bottom:0}
   .marco::after{bottom:0;right:0;border-left:0;border-top:0}
 
   .titulo{margin:0;font-weight:800;text-transform:uppercase;
           letter-spacing:-.03em;line-height:.86;
-          font-size:clamp(2.1rem,5.2vw,5rem);color:var(--branco)}
+          font-size:clamp(2.1rem,5.4vw,5.2rem);color:var(--branco)}
   .titulo span{display:block}
 
-  .foto{position:relative;overflow:hidden;background:var(--zeiss)}
-  .foto img{width:100%;height:100%;object-fit:cover;object-position:60% center;display:block}
+  /* a barra azul: faixa solida no rodape, a cor da marca presente sem
+     partir a tela ao meio */
+  .barra{position:absolute;left:0;right:0;bottom:0;z-index:1;
+         height:var(--barra);background:var(--zeiss);
+         display:flex;align-items:center;
+         padding:0 clamp(28px,5vw,92px)}
+  .barra span{font-size:clamp(.68rem,1vw,.84rem);letter-spacing:.26em;
+              text-transform:uppercase;color:rgba(255,255,255,.92)}
 
   @media (max-height:620px){
     .logo{height:34px}
-    .titulo{font-size:clamp(1.7rem,3.6vw,2.6rem)}
+    .titulo{font-size:clamp(1.8rem,4vw,2.8rem)}
     .marco{padding:18px 16px}
   }
 
   @media (max-width:860px){
-    .hero{grid-template-columns:1fr;grid-template-rows:44svh 56svh}
-    .foto{order:1}
-    .foto img{object-position:58% center}
-    .painel{order:2;justify-content:center;padding:clamp(26px,7vw,44px)}
-    .logo{position:static;align-self:flex-start;   /* sem isso o flex estica a marca */
-           height:clamp(32px,8vw,44px);margin-bottom:clamp(18px,4vw,28px)}
-    .marco{align-self:start}
-    .titulo{font-size:clamp(1.9rem,8.2vw,3rem)}
+    .bg{object-position:center bottom}
+    .conteudo{left:clamp(24px,6vw,34px);right:clamp(24px,6vw,34px);
+              top:clamp(96px,17vw,132px);bottom:auto;transform:none}
+    .logo{top:clamp(24px,6vw,34px);left:clamp(24px,6vw,34px);height:clamp(34px,9vw,46px)}
+    .titulo{font-size:clamp(2rem,9vw,3.1rem)}
   }
 </style>
 </head>
 <body>
 
 <main class="hero">
+  <picture>
+    <source media="(max-width:860px)" srcset="/assets/loira-zeiss-vert.webp" width="1080" height="1920">
+    <img class="bg" src="/assets/loira-zeiss.webp" alt="" width="2560" height="1440" fetchpriority="high">
+  </picture>
 
-  <section class="painel">
-    <img class="logo" src="/assets/zeiss-logo-branca.png" alt="ZEISS" width="640" height="640">
+  <img class="logo" src="/assets/zeiss-logo-branca.png" alt="ZEISS" width="640" height="640">
+
+  <div class="conteudo">
     <div class="marco">
       <h1 class="titulo">
         <span>Semana</span>
@@ -90,12 +102,9 @@
         <span>encerrada</span>
       </h1>
     </div>
-  </section>
+  </div>
 
-  <section class="foto">
-    <img src="/assets/foto-zeiss.webp" alt="" width="1700" height="1760" fetchpriority="high">
-  </section>
-
+  <div class="barra"><span>ZEISS Vision Center · Rio de Janeiro</span></div>
 </main>
 
 </body>
