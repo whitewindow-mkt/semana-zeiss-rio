@@ -3,11 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Semana ZEISS 2026 — encerrada</title>
-<meta name="description" content="A Semana ZEISS 2026 foi encerrada.">
+<title>Semana ZEISS 2026 encerrada | ZEISS Vision Center Rio de Janeiro</title>
+<meta name="description" content="A Semana ZEISS 2026 foi encerrada. Obrigado a quem participou. ZEISS Vision Center no Rio de Janeiro: Icaraí, Gávea, Largo do Machado, Rio Sul e Recreio.">
+<link rel="canonical" href="https://semanazeissrio.com.br/">
+<meta name="theme-color" content="#0F2DB3">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://semanazeissrio.com.br/">
+<meta property="og:site_name" content="Semana ZEISS Rio">
+<meta property="og:locale" content="pt_BR">
 <meta property="og:title" content="Semana ZEISS 2026 encerrada">
-<meta property="og:description" content="A Semana ZEISS 2026 foi encerrada.">
-<meta property="og:image" content="https://semanazeissrio.com.br/assets/hero-h.webp">
+<meta property="og:description" content="A campanha foi encerrada. Obrigado a quem participou.">
+<meta property="og:image" content="https://semanazeissrio.com.br/assets/og-semana-zeiss.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Semana ZEISS 2026 encerrada">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Semana ZEISS 2026 encerrada">
+<meta name="twitter:description" content="A campanha foi encerrada. Obrigado a quem participou.">
+<meta name="twitter:image" content="https://semanazeissrio.com.br/assets/og-semana-zeiss.jpg">
+<meta name="twitter:image:alt" content="Semana ZEISS 2026 encerrada">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -38,7 +56,10 @@
 
   .hero__foto{position:absolute;inset:0;width:100%;height:100%;z-index:0}
   .hero__foto img{position:absolute;inset:0;width:100%;height:100%;
-                  object-fit:cover;object-position:left center}
+                  object-fit:cover;object-position:left center;
+                  /* zoom ancorado na direita: a modelo cresce e o corte sai
+                     pelas bordas, sem comer o vao azul do texto */
+                  transform:scale(1.16);transform-origin:88% center}
 
   .hero__corpo{position:absolute;inset:0;z-index:1;
                display:flex;flex-direction:column;justify-content:center;
@@ -67,8 +88,9 @@
         height:var(--fita);background:var(--branco);color:var(--zeiss);
         display:flex;align-items:center;justify-content:center;
         font-weight:700;text-transform:uppercase;
-        letter-spacing:.22em;font-size:clamp(.66rem,1.05vw,.86rem);
-        padding:0 clamp(20px,4vw,40px);text-align:center}
+        letter-spacing:.18em;font-size:clamp(.62rem,1vw,.84rem);
+        padding:0 clamp(16px,4vw,40px);text-align:center;
+        white-space:nowrap}   /* uma linha, sempre */
 
   @media (max-height:620px){
     .logo{height:30px}
@@ -78,12 +100,56 @@
 
   @media (max-width:860px){
     .hero__foto img{object-position:center top}
-    .hero__corpo{justify-content:flex-start;max-width:100%;
-                 padding:clamp(96px,22vw,150px) clamp(24px,6vw,34px) 0}
-    .logo{top:clamp(24px,6vw,34px);left:clamp(24px,6vw,34px);height:clamp(32px,8vw,42px)}
-    .titulo{font-size:clamp(2rem,9vw,3.1rem)}
+    .hero__corpo{justify-content:flex-start;max-width:100%;align-items:center;
+                 padding:clamp(96px,22vw,150px) clamp(20px,5vw,30px) 0}
+    .marco{align-self:center}
+    .titulo{font-size:clamp(2rem,9vw,3.1rem);text-align:center}
+    .logo{top:clamp(24px,6vw,34px);left:50%;transform:translateX(-50%);
+          height:clamp(32px,8vw,42px)}
+    .so-desktop{display:none}   /* o titulo ja diz "encerrada" */
   }
 </style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"WebSite",
+      "@id":"https://semanazeissrio.com.br/#site",
+      "url":"https://semanazeissrio.com.br/",
+      "name":"Semana ZEISS Rio",
+      "inLanguage":"pt-BR"
+    },
+    {
+      "@type":"WebPage",
+      "@id":"https://semanazeissrio.com.br/#pagina",
+      "url":"https://semanazeissrio.com.br/",
+      "name":"Semana ZEISS 2026 encerrada",
+      "description":"A Semana ZEISS 2026 foi encerrada. Obrigado a quem participou.",
+      "isPartOf":{"@id":"https://semanazeissrio.com.br/#site"},
+      "inLanguage":"pt-BR",
+      "primaryImageOfPage":"https://semanazeissrio.com.br/assets/og-semana-zeiss.jpg"
+    },
+    {
+      "@type":"SaleEvent",
+      "name":"Semana ZEISS 2026",
+      "description":"Campanha anual de lentes ZEISS nas unidades ZEISS Vision Center do Rio de Janeiro.",
+      "startDate":"2026-08-08",
+      "endDate":"2026-08-20",
+      "eventStatus":"https://schema.org/EventScheduled",
+      "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
+      "image":"https://semanazeissrio.com.br/assets/og-semana-zeiss.jpg",
+      "location":{
+        "@type":"Place",
+        "name":"ZEISS Vision Center",
+        "address":{"@type":"PostalAddress","addressLocality":"Rio de Janeiro","addressRegion":"RJ","addressCountry":"BR"}
+      },
+      "organizer":{"@type":"Organization","name":"ZEISS Vision Center Rio de Janeiro"}
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -109,7 +175,7 @@
     </div>
   </div>
 
-  <div class="fita">A campanha foi encerrada. Obrigado a quem participou.</div>
+  <div class="fita"><span class="so-desktop">Campanha encerrada. </span>Obrigado a quem participou</div>
 </section>
 
 </body>
