@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Semana ZEISS 2026 — encerrada</title>
-<meta name="description" content="A Semana ZEISS 2026 foi encerrada. Obrigado a todos que participaram.">
+<meta name="description" content="A Semana ZEISS 2026 está encerrada até segunda ordem.">
 <meta property="og:title" content="Semana ZEISS 2026 — encerrada">
-<meta property="og:description" content="Obrigado a todos que participaram. Até a próxima edição.">
+<meta property="og:description" content="Acabou. Até segunda ordem.">
 <meta property="og:image" content="https://semanazeissrio.com.br/assets/hero-zeiss.webp">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.png" type="image/png">
@@ -15,86 +15,72 @@
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/archivo-latin.woff2" crossorigin>
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "98ebdb1d451549c5970b1c91e564b337"}'></script>
 <style>
-  /* Archivo: grotesca de sinalizacao, aberturas amplas e peso alto sem afetacao.
-     Auto-hospedada — nenhuma chamada a servidor de terceiro. Variavel: um
-     arquivo de 35 KB cobre 400 a 800. */
   @font-face{
     font-family:"Archivo";
     src:url("/assets/fonts/archivo-latin.woff2") format("woff2");
-    font-weight:100 900;
-    font-style:normal;
-    font-display:swap;
+    font-weight:100 900;font-style:normal;font-display:swap;
   }
   :root{--azul:#164191;--claro:#a8c8f0}
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;height:100%}
+
+  /* uma tela, sempre. nada de barra de rolagem */
+  html,body{margin:0;padding:0;height:100%;overflow:hidden}
   body{background:var(--azul);color:#fff;
-       font-family:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+       font-family:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+       -webkit-font-smoothing:antialiased}
 
-  .hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden}
+  .hero{position:relative;height:100svh;width:100%;overflow:hidden;
+        display:flex;align-items:center}
 
-  /* a foto E o fundo: cobre a tela inteira, ancorada na direita pra mulher
-     nunca ficar no centro e o lado esquerdo sobrar pro texto */
+  /* a foto E o fundo. sem veu, sem sombra, sem gradiente por cima:
+     o azul da esquerda ja vem da propria imagem */
   .bg{position:absolute;inset:0;width:100%;height:100%;
       object-fit:cover;object-position:right bottom;z-index:0}
 
-  /* reforco de contraste so na faixa do texto; morre antes da mulher */
-  .veu{position:absolute;inset:0;z-index:1;
-       background:linear-gradient(95deg, rgba(9,28,68,.72) 0%, rgba(12,36,84,.45) 30%, rgba(22,65,145,0) 58%)}
+  .texto{position:relative;z-index:1;
+         padding-left:clamp(28px,5vw,86px);padding-right:clamp(24px,3vw,48px);
+         max-width:min(54vw,720px)}
 
-  .texto{position:relative;z-index:2;padding:clamp(32px,6vw,88px);max-width:min(56vw,760px)}
-
-  .logo{height:clamp(34px,4vw,54px);width:auto;display:block;
-        margin-bottom:clamp(28px,4.5vw,52px)}
+  .logo{height:clamp(28px,3.4vw,46px);width:auto;display:block;
+        margin-bottom:clamp(20px,3.4vw,40px)}
 
   .titulo{margin:0;font-weight:800;text-transform:uppercase;
-          letter-spacing:-.02em;line-height:.92;
-          font-size:clamp(2.4rem,6vw,5.4rem);
-          text-shadow:0 2px 24px rgba(6,20,50,.35)}
+          letter-spacing:-.025em;line-height:.9;
+          font-size:clamp(2.2rem,5.4vw,4.9rem)}
   .titulo span{display:block}
-  .titulo .encerrada{color:var(--claro);margin-top:.08em}
+  .titulo .encerrada{color:var(--claro);margin-top:.06em}
 
-  .linha{border:0;width:clamp(56px,7vw,120px);height:3px;background:var(--claro);
-         margin:clamp(26px,3.4vw,44px) 0 clamp(18px,2.4vw,28px)}
+  .linha{border:0;width:clamp(48px,6vw,104px);height:3px;background:var(--claro);
+         margin:clamp(20px,2.8vw,36px) 0 clamp(14px,2vw,24px)}
 
-  .obrigado{margin:0;max-width:30ch;font-size:clamp(1rem,1.5vw,1.32rem);
-            line-height:1.55;color:rgba(255,255,255,.92)}
+  .obrigado{margin:0;max-width:28ch;
+            font-size:clamp(.95rem,1.4vw,1.25rem);line-height:1.5;
+            color:rgba(255,255,255,.92)}
 
-  .saida{margin-top:clamp(30px,4.5vw,56px)}
-  .saida a{display:inline-flex;align-items:center;gap:.6em;
-           color:#c3d4ec;text-decoration:none;
-           font-size:clamp(.86rem,1.15vw,1rem);letter-spacing:.01em;
-           padding-bottom:.35em;border-bottom:1px solid rgba(195,212,236,.42);
-           transition:color .35s cubic-bezier(.22,1,.36,1),
-                      border-color .35s cubic-bezier(.22,1,.36,1)}
-  .saida a:hover,.saida a:focus-visible{color:#fff;border-color:#fff}
-  .saida a:focus-visible{outline:2px solid #fff;outline-offset:6px;border-radius:2px}
-  .saida svg{width:1.05em;height:1.05em;fill:none;stroke:currentColor;
-             stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
-             transition:transform .35s cubic-bezier(.22,1,.36,1)}
-  .saida a:hover svg{transform:translateX(4px)}
-  @media (prefers-reduced-motion:reduce){
-    .saida a,.saida svg{transition:none}
-    .saida a:hover svg{transform:none}
+  /* telas baixas: encolhe em vez de criar rolagem */
+  @media (max-height:640px){
+    .logo{height:26px;margin-bottom:14px}
+    .titulo{font-size:clamp(1.9rem,4.4vw,3rem)}
+    .linha{margin:16px 0 12px}
+    .obrigado{font-size:.95rem}
   }
 
   @media (max-width:820px){
     .hero{align-items:flex-end}
-    .bg{object-position:72% bottom}
-    .veu{background:linear-gradient(to top, rgba(9,28,68,.94) 30%, rgba(12,36,84,.6) 55%, rgba(22,65,145,0) 88%)}
-    .texto{max-width:100%;padding:clamp(28px,7vw,40px);padding-bottom:clamp(36px,9vw,56px)}
-    .titulo{font-size:clamp(2.2rem,9.5vw,3.4rem)}
+    .bg{object-position:74% bottom}
+    .texto{max-width:100%;padding:0 clamp(26px,7vw,38px) clamp(34px,8vw,52px);
+           /* so no mobile o texto fica sobre a foto, entao precisa de base */
+           background:linear-gradient(to top, rgba(13,38,88,.96) 42%, rgba(15,44,101,.72) 68%, rgba(22,65,145,0) 100%);
+           padding-top:clamp(60px,16vw,110px);width:100%}
+    .titulo{font-size:clamp(2rem,9vw,3.2rem)}
     .obrigado{max-width:26ch}
-    /* alvo de toque de 44px: a linha de texto sozinha dava 36 */
-    .saida a{padding-top:.5em;padding-bottom:.55em}
   }
 </style>
 </head>
 <body>
 
 <main class="hero">
-  <img class="bg" src="/assets/hero-zeiss.webp" alt="" width="1900" height="1200" fetchpriority="high">
-  <div class="veu"></div>
+  <img class="bg" src="/assets/hero-zeiss.webp" alt="" width="2400" height="1200" fetchpriority="high">
 
   <div class="texto">
     <img class="logo" src="/assets/zeiss-logo-branca.png" alt="ZEISS" width="640" height="640">
@@ -107,17 +93,7 @@
 
     <hr class="linha">
 
-    <p class="obrigado">
-      Obrigado a todos que participaram.<br>
-      Até a próxima edição.
-    </p>
-
-    <p class="saida">
-      <a href="https://instagram.com/zeissvisioncenter_brasil" rel="noopener">
-        Acompanhe a ZEISS Vision Center no Instagram
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
-      </a>
-    </p>
+    <p class="obrigado">Acabou. Até segunda ordem.</p>
   </div>
 </main>
 
